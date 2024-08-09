@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext'
-import { ProductsContextProvider } from './context/ProductContext';
+// import { ProductsContextProvider } from './context/ProductContext';
 
 
 // pages & components
@@ -12,8 +12,8 @@ import Users from './pages/Users'
 import Receipts from './pages/Receipts'
 import Orders from './pages/Orders'
 import Products from './pages/Products'
-import Farmer_Meetings from './pages/Farmer_Meetings'
-import Daily_Visits from './pages/Daily_Visits'
+import FarmerMeetings from './pages/Farmer_Meetings'
+import DailyVisits from './pages/Daily_Visits'
 import Dealers from './pages/Dealers'
 import Policys from './pages/Policys';
 
@@ -62,12 +62,12 @@ function App() {
             />
             <Route
             path='/Farmer_Meetings'
-            element={user ? <Farmer_Meetings /> : <Navigate to="/login" />}            
+            element={user ? <FarmerMeetings /> : <Navigate to="/login" />}            
             component={Farmer_Meetings}
             />
             <Route
             path='/Daily_Visits'
-            element={user ? <Daily_Visits /> : <Navigate to="/login" />}
+            element={user ? <DailyVisits /> : <Navigate to="/login" />}
             />
             <Route
             path='/Dealers'

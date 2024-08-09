@@ -2,9 +2,9 @@ import { createContext, useReducer } from 'react'
 
 export const WorkoutsContext = createContext()
 
-const initialState = {
-  workouts: []
-}
+// const initialState = {
+//   workouts: []
+// }
 
 
 export const workoutsReducer = (state, action) => {

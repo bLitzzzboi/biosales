@@ -2,9 +2,9 @@ import { createContext, useReducer } from 'react'
 
 export const ProductsContext = createContext()
 
-const initialState = {
-  products: [] // Initialize products as an empty array
-};
+// const initialState = {
+//   products: [] // Initialize products as an empty array
+// };
 
 export const productsReducer = (state, action) => {
   switch (action.type) {

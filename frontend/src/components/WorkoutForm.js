@@ -25,7 +25,7 @@ const WorkoutForm = () => {
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
 //   const navigateToAnotherPage = () => {
 //     navigate('/Daily_Visits');
