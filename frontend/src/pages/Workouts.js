@@ -128,6 +128,8 @@ const Workouts = () => {
   };
 
   useEffect(() => {
+    // console.log('token', user.token)
+
     const fetchWorkouts = async () => {
       try {
         const response = await fetch("/api/workouts", {
