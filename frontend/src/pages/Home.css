@@ -1,0 +1,30 @@
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .content .tile {
+    background: #fff;
+    border-radius: 4px;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+    text-align: center; /* Center text horizontally */
+    width: 70%; /* Adjust width as needed */
+    max-width: 800px; /* Set maximum width if necessary */
+  }
+  
+  .content .tile h4 {
+    margin: 0 0 10px 0;
+    font-size: 1.5em; /* Increase font size */
+    color: var(--primary);
+  }
+  
+  .content .tile p {
+    margin: 0;
+    font-size: 1em; /* Increase font size */
+    color: #555;
+  }
+  

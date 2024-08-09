@@ -1,0 +1,52 @@
+/* Container styles */
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  padding: 10px;
+  /* max-width: 100%; */
+  width: 160vh;
+  margin: auto;
+}
+
+/* Navbar styles */
+header {
+  background-color: #ffffff; /* Light grey background */
+  /* border-bottom: 1px solid #e0e0e0; /* Light border at the bottom */
+} */
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+/* Navbar button styles */
+.navbar-button {
+  background-color: #C0E9BB; /* Blue background */
+  color: #012F4F;
+  border: none;
+  padding: 10px 20px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.navbar-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.login-button {
+  background-color: #28a745; /* Green background */
+}
+
+.login-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+/* Image styles */
+img {
+  max-height: 100px; /* Ensure logo fits within 100px height */
+  height: auto;
+  width: auto;
+}
