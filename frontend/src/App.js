@@ -63,7 +63,7 @@ function App() {
             <Route
             path='/Farmer_Meetings'
             element={user ? <FarmerMeetings /> : <Navigate to="/login" />}            
-            component={Farmer_Meetings}
+            component={FarmerMeetings}
             />
             <Route
             path='/Daily_Visits'
