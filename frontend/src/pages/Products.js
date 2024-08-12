@@ -139,23 +139,23 @@ const Products = () => {
     }
   };
 
-  const handleUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const storageRef = firebase.storage().ref();
-      const folderPath = 'product_images'; // Path to the specific folder
-      const fileRef = storageRef.child(`${folderPath}/${file.name}`);
+  // const handleUpload = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const storageRef = firebase.storage().ref();
+  //     const folderPath = 'product_images'; // Path to the specific folder
+  //     const fileRef = storageRef.child(`${folderPath}/${file.name}`);
 
-      fileRef.put(file).then(() => {
-        console.log('Uploaded a file');
-        fileRef.getDownloadURL().then((url) => {
-          console.log(url);
-          setImgURL(url);
-          setActive_ingredient(url);
-        });
-      });
-    }
-  };
+  //     fileRef.put(file).then(() => {
+  //       console.log('Uploaded a file');
+  //       fileRef.getDownloadURL().then((url) => {
+  //         console.log(url);
+  //         setImgURL(url);
+  //         setActive_ingredient(url);
+  //       });
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
     const fetchProducts = async () => {
