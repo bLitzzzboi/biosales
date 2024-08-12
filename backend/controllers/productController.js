@@ -30,27 +30,29 @@ const getProduct = async (req, res) => {
 
 // create new workout
 const createProduct = async (req, res) => {
-  const {active_ingredient, formulation, crops, pests, 
-    dosage, packs_in_carton, name, price_per_pack, 
+  const {
+    // active_ingredient, formulation, crops, pests, 
+    // dosage, 
+    packs_in_carton, name, price_per_pack, 
     price_per_carton} = req.body
 
   let emptyFields = []
 
-  if(!active_ingredient) {
-    emptyFields.push('active_ingredient')
-  }
-  if(!formulation) {
-    emptyFields.push('formulation')
-  }
-  if(!crops) {
-    emptyFields.push('crops')
-  }
-  if(!pests) {
-    emptyFields.push('pests')
-  }
-  if(!dosage) {
-    emptyFields.push('dosage')
-  }
+  // if(!active_ingredient) {
+  //   emptyFields.push('active_ingredient')
+  // }
+  // if(!formulation) {
+  //   emptyFields.push('formulation')
+  // }
+  // if(!crops) {
+  //   emptyFields.push('crops')
+  // }
+  // if(!pests) {
+  //   emptyFields.push('pests')
+  // }
+  // if(!dosage) {
+  //   emptyFields.push('dosage')
+  // }
   if(!packs_in_carton) {
     emptyFields.push('packs_in_carton')
   }
@@ -70,8 +72,10 @@ const createProduct = async (req, res) => {
   // add doc to db
   try {
     const user_id = req.user._id
-    const product = await Product.create({active_ingredient, formulation, crops, pests, 
-        dosage, packs_in_carton, name, price_per_pack, 
+    const product = await Product.create({
+      // active_ingredient, formulation, crops, pests, 
+        // dosage, 
+        packs_in_carton, name, price_per_pack, 
         price_per_carton, user_id})
     res.status(200).json(product)
   } catch (error) {
@@ -114,11 +118,11 @@ const updateProduct = async (req, res) => {
     }
 
     // Update the workout fields based on req.body
-    product.active_ingredient = req.body.active_ingredient;
-    product.formulation = req.body.formulation;
-    product.crops = req.body.crops;
-    product.pests = req.body.pests;
-    product.dosage = req.body.dosage;
+    // product.active_ingredient = req.body.active_ingredient;
+    // product.formulation = req.body.formulation;
+    // product.crops = req.body.crops;
+    // product.pests = req.body.pests;
+    // product.dosage = req.body.dosage;
     product.packs_in_carton = req.body.packs_in_carton;
     product.name = req.body.name;
     product.price_per_pack = req.body.price_per_pack;

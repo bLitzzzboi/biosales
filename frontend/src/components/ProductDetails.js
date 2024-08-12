@@ -81,7 +81,7 @@ const ProductDetails = ({ product }) => {
           <h2>Edit Product</h2>
           <div style={{ maxHeight: '60vh', overflow: 'auto' }}>
             <form onSubmit={handleSubmit}>
-              <div style={{ marginBottom: '10px' }}>
+              {/* <div style={{ marginBottom: '10px' }}>
                 <label>Active Ingredient:</label>
                 <input
                   type="text"
@@ -89,9 +89,9 @@ const ProductDetails = ({ product }) => {
                   onChange={handleChange}
                   value={formData.active_ingredient}
                 />
-              </div>
+              </div> */}
 
-              <div style={{ marginBottom: '10px' }}>
+              {/* <div style={{ marginBottom: '10px' }}>
                 <label>Formulation:</label>
                 <input
                   type="text"
@@ -99,9 +99,9 @@ const ProductDetails = ({ product }) => {
                   onChange={handleChange}
                   value={formData.formulation}
                 />
-              </div>
+              </div> */}
 
-              <div style={{ marginBottom: '10px' }}>
+              {/* <div style={{ marginBottom: '10px' }}>
                 <label>Crops:</label>
                 <input
                   type="text"
@@ -109,9 +109,9 @@ const ProductDetails = ({ product }) => {
                   onChange={handleChange}
                   value={formData.crops}
                 />
-              </div>
+              </div> */}
 
-              <div style={{ marginBottom: '10px' }}>
+              {/* <div style={{ marginBottom: '10px' }}>
                 <label>Pests:</label>
                 <input
                   type="text"
@@ -129,7 +129,7 @@ const ProductDetails = ({ product }) => {
                   onChange={handleChange}
                   value={formData.dosage}
                 />
-              </div>
+              </div> */}
 
               <div style={{ marginBottom: '10px' }}>
                 <label>Packs in Carton:</label>

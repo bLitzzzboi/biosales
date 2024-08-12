@@ -9,26 +9,26 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
-  active_ingredient: {
-    type: String,
-    required: true
-  },
-  formulation: {
-    type: String,
-    required: true
-  },
-  crops: {
-    type: String,
-    required: true
-  },
-  pests: {
-    type: String,
-    required: true
-  },
-  dosage: {
-    type: String,
-    required: true
-  },
+  // active_ingredient: {
+  //   type: String,
+  //   required: true
+  // },
+  // formulation: {
+  //   type: String,
+  //   required: true
+  // },
+  // crops: {
+  //   type: String,
+  //   required: true
+  // },
+  // pests: {
+  //   type: String,
+  //   required: true
+  // },
+  // dosage: {
+  //   type: String,
+  //   required: true
+  // },
   packs_in_carton: {
     type: Number,
     required: true

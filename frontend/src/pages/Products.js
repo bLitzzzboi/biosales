@@ -12,11 +12,11 @@ const Products = () => {
   const { user } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [active_ingredient, setActive_ingredient] = useState('');
-  const [formulation, setFormulation] = useState('');
-  const [crops, setCrops] = useState('');
-  const [pests, setPests] = useState('');
-  const [dosage, setDosage] = useState('');
+  // const [active_ingredient, setActive_ingredient] = useState('');
+  // const [formulation, setFormulation] = useState('');
+  // const [crops, setCrops] = useState('');
+  // const [pests, setPests] = useState('');
+  // const [dosage, setDosage] = useState('');
   const [packs_in_carton, setPacks_in_carton] = useState('');
   const [name, setName] = useState('');
   const [price_per_pack, setPrice_per_pack] = useState('');
@@ -41,11 +41,11 @@ const Products = () => {
     sales: "",
     cash_returned: "",
 
-    active_ingredient: "",
-    formulation: "",
-    crops: "",
-    pests: "",
-    dosage: "",
+    // active_ingredient: "",
+    // formulation: "",
+    // crops: "",
+    // pests: "",
+    // dosage: "",
     packs_in_carton: "",
     name: "",
     price_per_pack: "",
@@ -60,11 +60,11 @@ const Products = () => {
     setSelectedProduct(product);
     setIsModalOpen(true);
     // Populate form fields with selected product data
-    setActive_ingredient(product.active_ingredient);
-    setFormulation(product.formulation);
-    setCrops(product.crops);
-    setPests(product.pests);
-    setDosage(product.dosage);
+    // setActive_ingredient(product.active_ingredient);
+    // setFormulation(product.formulation);
+    // setCrops(product.crops);
+    // setPests(product.pests);
+    // setDosage(product.dosage);
     setPacks_in_carton(product.packs_in_carton);
     setName(product.name);
     setPrice_per_pack(product.price_per_pack);
@@ -80,11 +80,11 @@ const Products = () => {
     }
 
     const product = {
-      active_ingredient,
-      formulation,
-      crops,
-      pests,
-      dosage,
+      // active_ingredient,
+      // formulation,
+      // crops,
+      // pests,
+      // dosage,
       packs_in_carton,
       name,
       price_per_pack,
@@ -118,11 +118,11 @@ const Products = () => {
         }
 
         // Clear form fields
-        setActive_ingredient('');
-        setFormulation('');
-        setCrops('');
-        setPests('');
-        setDosage('');
+        // setActive_ingredient('');
+        // setFormulation('');
+        // setCrops('');
+        // setPests('');
+        // setDosage('');
         setPacks_in_carton('');
         setName('');
         setPrice_per_pack('');
@@ -244,7 +244,7 @@ const Products = () => {
         <h2>{selectedProduct ? 'Edit Product' : 'Add New Product'}</h2>
         <div style={{ maxHeight: "60vh", overflow: "auto" }}>
           <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: "10px" }}>
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Active Ingredient:</label>
               <input
                 type="text"
@@ -252,8 +252,8 @@ const Products = () => {
                 value={active_ingredient}
                 className={emptyFields.includes('active_ingredient') ? 'error' : ''}
               />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
+            </div> */}
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Formulation:</label>
               <input
                 type="text"
@@ -261,8 +261,8 @@ const Products = () => {
                 value={formulation}
                 className={emptyFields.includes('formulation') ? 'error' : ''}
               />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
+            </div> */}
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Crops:</label>
               <input
                 type="text"
@@ -270,8 +270,8 @@ const Products = () => {
                 value={crops}
                 className={emptyFields.includes('crops') ? 'error' : ''}
               />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
+            </div> */}
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Pests:</label>
               <input
                 type="text"
@@ -279,8 +279,8 @@ const Products = () => {
                 value={pests}
                 className={emptyFields.includes('pests') ? 'error' : ''}
               />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
+            </div> */}
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Dosage:</label>
               <input
                 type="text"
@@ -288,7 +288,7 @@ const Products = () => {
                 value={dosage}
                 className={emptyFields.includes('dosage') ? 'error' : ''}
               />
-            </div>
+            </div> */}
             <div style={{ marginBottom: "10px" }}>
               <label>Packs in Carton:</label>
               <input
