@@ -4,25 +4,13 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import WorkoutDetails from "../components/WorkoutDetails";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
-import { useInView } from 'react-intersection-observer'; // Import the useInView hook
+import { useInView } from "react-intersection-observer";
 
 const Workouts = () => {
   const { workouts, dispatch } = useWorkoutsContext();
   const { user } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const [area, setArea] = useState("");
-  const [full_name, setFull_name] = useState("");
-  const [cnic, setCnic] = useState("");
-  const [designation, setDesignation] = useState("");
-  const [contact_no, setContact_no] = useState("");
-  const [vehicle_number, setVehicle_number] = useState("");
-  const [vehicle_make, setVehicle_make] = useState("");
-  const [vehicle_model, setVehicle_model] = useState("");
-  const [sales, setSales] = useState("");
-  const [cash_returned, setCash_returned] = useState("");
-
   const [formData, setFormData] = useState({
     area: "",
     full_name: "",
@@ -35,25 +23,26 @@ const Workouts = () => {
     sales: "",
     cash_returned: "",
   });
-
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+  const [selectedWorkout, setSelectedWorkout] = useState(null);
 
   const navigate = useNavigate();
-  const [selectedWorkout, setSelectedWorkout] = useState(null);
 
   const handleEditClick = (workout) => {
     setSelectedWorkout(workout);
-    setArea(workout.area);
-    setFull_name(workout.full_name);
-    setCnic(workout.cnic);
-    setDesignation(workout.designation);
-    setContact_no(workout.contact_no);
-    setVehicle_number(workout.vehicle_number);
-    setVehicle_make(workout.vehicle_make);
-    setVehicle_model(workout.vehicle_model);
-    setSales(workout.sales);
-    setCash_returned(workout.cash_returned);
+    setFormData({
+      area: workout.area,
+      full_name: workout.full_name,
+      cnic: workout.cnic,
+      designation: workout.designation,
+      contact_no: workout.contact_no,
+      vehicle_number: workout.vehicle_number,
+      vehicle_make: workout.vehicle_make,
+      vehicle_model: workout.vehicle_model,
+      sales: workout.sales,
+      cash_returned: workout.cash_returned,
+    });
     setIsModalOpen(true);
   };
 
@@ -65,26 +54,15 @@ const Workouts = () => {
       return;
     }
 
-    const workout = {
-      area,
-      full_name,
-      cnic,
-      designation,
-      contact_no,
-      vehicle_number,
-      vehicle_make,
-      vehicle_model,
-      sales,
-      cash_returned,
-    };
-
     try {
-      const url = selectedWorkout ? `/api/workouts/${selectedWorkout._id}` : '/api/workouts';
+      const url = selectedWorkout
+        ? `/api/workouts/${selectedWorkout._id}`
+        : "/api/workouts";
       const method = selectedWorkout ? "PUT" : "POST";
 
       const response = await fetch(url, {
         method,
-        body: JSON.stringify(workout),
+        body: JSON.stringify(formData),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
@@ -97,30 +75,30 @@ const Workouts = () => {
         setEmptyFields(errorData.emptyFields || []);
       } else {
         const json = await response.json();
-
         if (selectedWorkout) {
           dispatch({ type: "UPDATE_WORKOUT", payload: json });
         } else {
           dispatch({ type: "CREATE_WORKOUT", payload: json });
         }
 
-        setArea("");
-        setFull_name("");
-        setCnic("");
-        setDesignation("");
-        setContact_no("");
-        setVehicle_number("");
-        setVehicle_make("");
-        setVehicle_model("");
-        setSales("");
-        setCash_returned("");
+        setFormData({
+          area: "",
+          full_name: "",
+          cnic: "",
+          designation: "",
+          contact_no: "",
+          vehicle_number: "",
+          vehicle_make: "",
+          vehicle_model: "",
+          sales: "",
+          cash_returned: "",
+        });
 
         setError(null);
         setEmptyFields([]);
         setIsModalOpen(false);
       }
     } catch (error) {
-      console.error('Failed to submit workout:', error.message);
       setError(error.message);
     }
   };
@@ -156,7 +134,7 @@ const Workouts = () => {
     setSearchQuery(e.target.value);
   };
 
-  const filteredWorkouts = (workouts || []).filter(workout =>
+  const filteredWorkouts = (workouts || []).filter((workout) =>
     workout.full_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -182,7 +160,12 @@ const Workouts = () => {
             placeholder="Search User"
             value={searchQuery}
             onChange={handleSearchChange}
-            style={{ marginRight: "20px", width: "20vh", borderRadius: "25px", border: "1px solid grey" }}
+            style={{
+              marginRight: "20px",
+              width: "20vh",
+              borderRadius: "25px",
+              border: "1px solid grey",
+            }}
           />
           <button
             style={{
@@ -205,7 +188,11 @@ const Workouts = () => {
       </div>
       {filteredWorkouts &&
         filteredWorkouts.map((workout) => (
-          <LazyWorkoutDetails key={workout._id} workout={workout} />
+          <LazyWorkoutDetails
+            key={workout._id}
+            workout={workout}
+            onEdit={() => handleEditClick(workout)}
+          />
         ))}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h2>{selectedWorkout ? "Edit User" : "Add New User"}</h2>
@@ -310,28 +297,22 @@ const Workouts = () => {
                 name="cash_returned"
                 onChange={handleInputChange}
                 value={formData.cash_returned}
-                className={emptyFields.includes("cash_returned") ? "error" : ""}
+                className={
+                  emptyFields.includes("cash_returned") ? "error" : ""
+                }
               />
             </div>
-            <button
-              type="submit"
-              style={{
-                padding: "10px 20px",
-                borderRadius: "25px",
-                border: "none",
-                backgroundColor: "#007bff",
-                color: "white",
-                cursor: "pointer",
-              }}
-            >
-              Submit
-            </button>
+            <button>Add User</button>
+            {error && <div className="error">{error}</div>}
           </form>
         </div>
       </Modal>
     </div>
   );
 };
+
+// export default Workouts;
+
 
 // Lazy loading for WorkoutDetails
 const LazyWorkoutDetails = ({ workout }) => {
