@@ -1,51 +1,57 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useProductsContext } from "../hooks/useProductsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import ProductDetails from "../components/ProductDetails";
 import Modal from "./Modal";
 import { useNavigate } from 'react-router-dom';
+import firebase from "firebase/compat/app";
+import 'firebase/compat/storage';
 import { useInView } from 'react-intersection-observer';
 
 const Products = () => {
   const { products, dispatch } = useProductsContext();
   const { user } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [name, setName] = useState('');
+  const [formData, setFormData] = useState({});
   const [packs_in_carton, setPacks_in_carton] = useState('');
-  const [policies, setPolicies] = useState([]);
-  const [packSizes, setPackSizes] = useState([]);
-  const [policyName, setPolicyName] = useState('');
-  const [policyMultiplier, setPolicyMultiplier] = useState('');
-  const [packSize, setPackSize] = useState('');
-  const [pricePerPack, setPricePerPack] = useState('');
+  const [name, setName] = useState('');
+  const [price_per_pack, setPrice_per_pack] = useState('');
+  const [price_per_carton, setPrice_per_carton] = useState('');
+  const [ImgURL, setImgURL] = useState('');
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+  const [productVariations, setProductVariations] = useState([]);
+  const [percentage, setPercentage] = useState('');
+  const [packSize, setPackSize] = useState('');
+  const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-
-  const handleAddPolicy = () => {
-    if (policyName && policyMultiplier) {
-      setPolicies(prev => [...prev, { name: policyName, multiplier: policyMultiplier }]);
-      setPolicyName('');
-      setPolicyMultiplier('');
-    }
-  };
-
-  const handleAddPackSize = () => {
-    if (packSize && pricePerPack) {
-      setPackSizes(prev => [...prev, { size: packSize, price_per_pack: pricePerPack }]);
-      setPackSize('');
-      setPricePerPack('');
-    }
-  };
 
   const handleEditClick = (product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
-    setName(product.name);
     setPacks_in_carton(product.packs_in_carton);
-    setPolicies(product.policies || []);
-    setPackSizes(product.pack_sizes || []);
+    setName(product.name);
+    setPrice_per_pack(product.price_per_pack);
+    setPrice_per_carton(product.price_per_carton);
+
+    if (product.variations) {
+      setProductVariations(product.variations);
+    }
+  };
+
+  const handleAddVariation = () => {
+    if (percentage && packSize) {
+      setProductVariations(prev => [...prev, { percentage, pack_size: packSize, packs_in_carton: '', price_per_pack: '', price_per_carton: '' }]);
+      setPercentage('');
+      setPackSize('');
+    }
+  };
+
+  const handleVariationChange = (index, field, value) => {
+    const updatedVariations = [...productVariations];
+    updatedVariations[index][field] = value;
+    setProductVariations(updatedVariations);
   };
 
   const handleSubmit = async (e) => {
@@ -54,48 +60,52 @@ const Products = () => {
       setError('You must be logged in');
       return;
     }
-
-    const product = {
-      name,
-      packs_in_carton,
-      policies,
-      pack_sizes: packSizes
-    };
-
-    const method = selectedProduct ? 'PUT' : 'POST';
-    const url = selectedProduct ? `/api/products/${selectedProduct._id}` : '/api/products';
     try {
-      const response = await fetch(url, {
-        method,
-        body: JSON.stringify(product),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+      const promises = productVariations.map(async (variation) => {
+        const product = {
+          name: `${name} ${variation.percentage} ${variation.pack_size}`,
+          packs_in_carton: variation.packs_in_carton,
+          price_per_pack: variation.price_per_pack,
+          price_per_carton: variation.price_per_carton
+        };
+
+        const method = selectedProduct ? 'PUT' : 'POST';
+        const url = selectedProduct ? `/api/products/${selectedProduct._id}` : '/api/products';
+        const response = await fetch(url, {
+          method,
+          body: JSON.stringify(product),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+          }
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          setError(errorData.error);
+          setEmptyFields(errorData.emptyFields || []);
+        } else {
+          const json = await response.json();
+          dispatch({ type: selectedProduct ? 'UPDATE_PRODUCT' : 'CREATE_PRODUCT', payload: json });
         }
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.error);
-        setEmptyFields(errorData.emptyFields || []);
-      } else {
-        const json = await response.json();
-        dispatch({ type: selectedProduct ? 'UPDATE_PRODUCT' : 'CREATE_PRODUCT', payload: json });
-        resetForm();
-      }
+      await Promise.all(promises);
+
+      setName('');
+      setPacks_in_carton('');
+      setPrice_per_pack('');
+      setPrice_per_carton('');
+      setImgURL('');
+      setProductVariations([]);
+      setError(null);
+      setEmptyFields([]);
+      setIsModalOpen(false);
+
     } catch (error) {
       console.error('Error submitting product:', error.message);
       setError('Failed to submit product. Please try again.');
     }
-  };
-
-  const resetForm = () => {
-    setName('');
-    setPacks_in_carton('');
-    setPolicies([]);
-    setPackSizes([]);
-    setSelectedProduct(null);
-    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -165,7 +175,7 @@ const Products = () => {
             <LazyProductDetails key={product._id} product={product} />
           ))}
       </div>
-      <Modal isOpen={isModalOpen} onClose={() => resetForm()}>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h2>{selectedProduct ? 'Edit Product' : 'Add New Product'}</h2>
         <div style={{ maxHeight: "60vh", overflow: "auto" }}>
           <form onSubmit={handleSubmit}>
@@ -179,42 +189,15 @@ const Products = () => {
               />
             </div>
             <div style={{ marginBottom: "10px" }}>
-              <label>Packs in Carton:</label>
-              <input
-                type="text"
-                onChange={(e) => setPacks_in_carton(e.target.value)}
-                value={packs_in_carton}
-                className={emptyFields.includes('packs_in_carton') ? 'error' : ''}
-              />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
-              <h4>Policies</h4>
               <label>Policy Name:</label>
               <input
                 type="text"
-                onChange={(e) => setPolicyName(e.target.value)}
-                value={policyName}
-                placeholder="e.g., Retail, Wholesale"
+                onChange={(e) => setPercentage(e.target.value)}
+                value={percentage}
+                placeholder="e.g., 36%, SCD, etc."
               />
-              <label>Multiplier:</label>
-              <input
-                type="number"
-                step="0.01"
-                onChange={(e) => setPolicyMultiplier(e.target.value)}
-                value={policyMultiplier}
-                placeholder="e.g., 1.2"
-              />
-              <button type="button" onClick={handleAddPolicy}>
-                Add Policy
-              </button>
             </div>
-            {policies.map((policy, index) => (
-              <div key={index} style={{ marginBottom: "10px" }}>
-                <strong>{policy.name}:</strong> Multiplier = {policy.multiplier}
-              </div>
-            ))}
             <div style={{ marginBottom: "10px" }}>
-              <h4>Pack Sizes</h4>
               <label>Pack Size:</label>
               <input
                 type="text"
@@ -222,28 +205,43 @@ const Products = () => {
                 value={packSize}
                 placeholder="e.g., 200ml"
               />
-              <label>Price Per Pack:</label>
-              <input
-                type="number"
-                onChange={(e) => setPricePerPack(e.target.value)}
-                value={pricePerPack}
-                placeholder="e.g., 10.00"
-              />
-              <button type="button" onClick={handleAddPackSize}>
-                Add Pack Size
+              <button type="button" onClick={handleAddVariation}>
+                Add Variation
               </button>
             </div>
-            {packSizes.map((pack, index) => (
-              <div key={index} style={{ marginBottom: "10px" }}>
-                <strong>Size:</strong> {pack.size} - <strong>Price Per Pack:</strong> ${pack.price_per_pack}
+            {productVariations.map((variation, index) => (
+              <div key={index} style={{ marginBottom: "20px", border: "1px solid #ddd", padding: "10px" }}>
+                <h4>{`${name} ${variation.percentage} ${variation.pack_size}`}</h4>
+                <div style={{ marginBottom: "10px" }}>
+                  <label>Packs in Carton:</label>
+                  <input
+                    type="text"
+                    onChange={(e) => handleVariationChange(index, 'packs_in_carton', e.target.value)}
+                    value={variation.packs_in_carton}
+                    className={emptyFields.includes('packs_in_carton') ? 'error' : ''} />
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <label>Price Per Pack:</label>
+                  <input
+                    type="number"
+                    onChange={(e) => handleVariationChange(index, 'price_per_pack', e.target.value)}
+                    value={variation.price_per_pack}
+                    className={emptyFields.includes('price_per_pack') ? 'error' : ''} />
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <label>Price per Carton:</label>
+                  <input
+                    type="number"
+                    onChange={(e) => handleVariationChange(index, 'price_per_carton', e.target.value)}
+                    value={variation.price_per_carton}
+                    className={emptyFields.includes('price_per_carton') ? 'error' : ''} />
+                </div>
               </div>
             ))}
             <button type="submit" style={{ padding: "10px 20px", borderRadius: "25px", border: "none", backgroundColor: "#007bff", color: "white", cursor: "pointer" }}>
               Submit
             </button>
           </form>
-       
-
         </div>
       </Modal>
     </div>
