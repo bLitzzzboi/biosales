@@ -10,6 +10,14 @@ const getWorkouts = async (req, res) => {
   res.status(200).json(workouts)
 }
 
+const getWorkoutsAdmin = async (req, res) => {
+  // const user_id = req.user._id
+
+  const workouts = await Workout.find({}).sort({createdAt: -1})
+
+  res.status(200).json(workouts)
+}
+
 // get a single workout
 const getWorkout = async (req, res) => {
   const { id } = req.params
@@ -141,6 +149,7 @@ const updateWorkout = async (req, res) => {
 
 module.exports = {
   getWorkouts,
+  getWorkoutsAdmin,
   getWorkout,
   createWorkout,
   deleteWorkout,

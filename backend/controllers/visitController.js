@@ -10,6 +10,14 @@ const getVisits = async (req, res) => {
   res.status(200).json(visits)
 }
 
+const getVisitsAdmin = async (req, res) => {
+  // const user_id = req.user._id
+
+  const visits = await Visit.find({}).sort({createdAt: -1})
+
+  res.status(200).json(visits)
+}
+
 // get a single workout
 const getVisit = async (req, res) => {
   const { id } = req.params
@@ -120,6 +128,7 @@ const updateVisit = async (req, res) => {
 
 module.exports = {
     getVisits,
+    getVisitsAdmin,
     getVisit,
     createVisit,
     deleteVisit,

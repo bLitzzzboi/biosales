@@ -1,6 +1,7 @@
 const express = require('express')
 const {
     getDealers,
+    getDealersAdmin,
     getDealer,
     createDealer,
     deleteDealer,
@@ -15,6 +16,9 @@ router.use(requireAuth)
 
 // GET all dealers
 router.get('/', getDealers)
+
+// GET all dealers for admin
+router.get('/admin', getDealersAdmin)
 
 //GET a single dealer
 router.get('/:id', getDealer)

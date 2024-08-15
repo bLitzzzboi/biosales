@@ -1,6 +1,7 @@
 const express = require('express')
 const {
     getVisits,
+    getVisitsAdmin,
     getVisit,
     createVisit,
     deleteVisit,
@@ -15,6 +16,9 @@ router.use(requireAuth)
 
 // GET all visits
 router.get('/', getVisits)
+
+// GET all visits for admin
+router.get('/admin', getVisitsAdmin)
 
 //GET a single visit
 router.get('/:id', getVisit)

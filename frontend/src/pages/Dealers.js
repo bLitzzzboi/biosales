@@ -119,7 +119,7 @@ const Dealers = () => {
   useEffect(() => {
     const fetchDealers = async () => {
       try {
-        const response = await fetch("/api/dealers", {
+        const response = await fetch("/api/dealers/admin", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         if (response.ok) {
@@ -135,7 +135,7 @@ const Dealers = () => {
 
     const fetchWorkouts = async () => {
       try {
-        const response = await fetch("/api/workouts", {
+        const response = await fetch("/api/workouts/admin", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         if (response.ok) {

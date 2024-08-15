@@ -100,7 +100,7 @@ const FarmerMeetings = () => {
   useEffect(() => {
     const fetchFarmerMeetings = async () => {
       try {
-        const response = await fetch("/api/farmermeetings", {
+        const response = await fetch("/api/farmermeetings/admin", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         if (response.ok) {
@@ -116,7 +116,7 @@ const FarmerMeetings = () => {
 
     const fetchWorkouts = async () => {
       try {
-        const response = await fetch("/api/workouts", {
+        const response = await fetch("/api/workouts/admin", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         if (response.ok) {

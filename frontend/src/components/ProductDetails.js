@@ -71,7 +71,6 @@ const ProductDetails = ({ product }) => {
       
       <div className="workout-details" onClick={handleEditClick} style={{ cursor: 'pointer', textAlign: 'center', 
             border: '1px solid #ddd', padding: '16px', borderRadius: '8px', width:'25vh', height:'20vh'}}>
-          {/* <img src={currentProduct.active_ingredient} alt="Description of Image" style={{ width: 'auto', paddingTop:'3vh', height: '10vh',transform: 'scale(1.5)' }} /> */}
         <h4 style={{paddingTop: '5vh'}}>{currentProduct.name}</h4>
         <p><strong>Price Per Pack (Rs): </strong>{currentProduct.price_per_pack}</p>
         <p style={{ paddingTop: '1.5vh' }}><strong>Created At: </strong>{new Date(currentProduct.createdAt).toLocaleString()}</p>
@@ -81,55 +80,6 @@ const ProductDetails = ({ product }) => {
           <h2>Edit Product</h2>
           <div style={{ maxHeight: '60vh', overflow: 'auto' }}>
             <form onSubmit={handleSubmit}>
-              {/* <div style={{ marginBottom: '10px' }}>
-                <label>Active Ingredient:</label>
-                <input
-                  type="text"
-                  name="active_ingredient"
-                  onChange={handleChange}
-                  value={formData.active_ingredient}
-                />
-              </div> */}
-
-              {/* <div style={{ marginBottom: '10px' }}>
-                <label>Formulation:</label>
-                <input
-                  type="text"
-                  name="formulation"
-                  onChange={handleChange}
-                  value={formData.formulation}
-                />
-              </div> */}
-
-              {/* <div style={{ marginBottom: '10px' }}>
-                <label>Crops:</label>
-                <input
-                  type="text"
-                  name="crops"
-                  onChange={handleChange}
-                  value={formData.crops}
-                />
-              </div> */}
-
-              {/* <div style={{ marginBottom: '10px' }}>
-                <label>Pests:</label>
-                <input
-                  type="text"
-                  name="pests"
-                  onChange={handleChange}
-                  value={formData.pests}
-                />
-              </div>
-
-              <div style={{ marginBottom: '10px' }}>
-                <label>Dosage:</label>
-                <input
-                  type="text"
-                  name="dosage"
-                  onChange={handleChange}
-                  value={formData.dosage}
-                />
-              </div> */}
 
               <div style={{ marginBottom: '10px' }}>
                 <label>Packs in Carton:</label>

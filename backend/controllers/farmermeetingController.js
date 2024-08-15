@@ -10,6 +10,14 @@ const getFarmerMeetings = async (req, res) => {
   res.status(200).json(farmermeetings)
 }
 
+const getFarmerMeetingsAdmin = async (req, res) => {
+  // const user_id = req.user._id
+
+  const farmermeetings = await FarmerMeeting.find({}).sort({createdAt: -1})
+
+  res.status(200).json(farmermeetings)
+}
+
 // get a single workout
 const getFarmerMeeting = async (req, res) => {
   const { id } = req.params
@@ -131,6 +139,7 @@ const updateFarmerMeeting = async (req, res) => {
 
 module.exports = {
     getFarmerMeetings,
+    getFarmerMeetingsAdmin,
     getFarmerMeeting,
     createFarmerMeeting,
     deleteFarmerMeeting,

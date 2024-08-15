@@ -10,6 +10,14 @@ const getDealers = async (req, res) => {
   res.status(200).json(dealers)
 }
 
+const getDealersAdmin = async (req, res) => {
+  const user_id = req.user._id
+
+  const dealers = await Dealer.find({}).sort({createdAt: -1})
+
+  res.status(200).json(dealers)
+}
+
 // get a single workout
 const getDealer = async (req, res) => {
   const { id } = req.params
@@ -135,6 +143,7 @@ const updateDealer = async (req, res) => {
 
 module.exports = {
     getDealers,
+    getDealersAdmin,
     getDealer,
     createDealer,
     deleteDealer,

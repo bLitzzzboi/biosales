@@ -1,6 +1,7 @@
 const express = require('express')
 const {
     getFarmerMeetings,
+    getFarmerMeetingsAdmin,
     getFarmerMeeting,
     createFarmerMeeting,
     deleteFarmerMeeting,
@@ -15,6 +16,9 @@ router.use(requireAuth)
 
 // GET all farmermeetings
 router.get('/', getFarmerMeetings)
+
+// GET all farmermeetings for admin
+router.get('/admin', getFarmerMeetingsAdmin)
 
 //GET a single farmermeeting
 router.get('/:id', getFarmerMeeting)

@@ -4,6 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import WorkoutDetails from "../components/WorkoutDetails";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
+import { useInView } from 'react-intersection-observer'; // Import the useInView hook
 
 const Workouts = () => {
   const { workouts, dispatch } = useWorkoutsContext();
@@ -23,9 +24,6 @@ const Workouts = () => {
   const [cash_returned, setCash_returned] = useState("");
 
   const [formData, setFormData] = useState({
-    title: "",
-    load: "",
-    reps: "",
     area: "",
     full_name: "",
     cnic: "",
@@ -128,11 +126,9 @@ const Workouts = () => {
   };
 
   useEffect(() => {
-    // console.log('token', user.token)
-
     const fetchWorkouts = async () => {
       try {
-        const response = await fetch("/api/workouts", {
+        const response = await fetch("/api/workouts/admin", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         if (response.ok) {
@@ -150,11 +146,6 @@ const Workouts = () => {
       fetchWorkouts();
     }
   }, [dispatch, user]);
-
-  useEffect(() => {
-    // Ensure that the filteredWorkouts updates when workouts change
-    console.log('Workouts updated:', workouts);
-  }, [workouts]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -214,7 +205,7 @@ const Workouts = () => {
       </div>
       {filteredWorkouts &&
         filteredWorkouts.map((workout) => (
-          <WorkoutDetails key={workout._id} workout={workout} />
+          <LazyWorkoutDetails key={workout._id} workout={workout} />
         ))}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h2>{selectedWorkout ? "Edit User" : "Add New User"}</h2>
@@ -338,6 +329,20 @@ const Workouts = () => {
           </form>
         </div>
       </Modal>
+    </div>
+  );
+};
+
+// Lazy loading for WorkoutDetails
+const LazyWorkoutDetails = ({ workout }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div ref={ref}>
+      {inView ? <WorkoutDetails workout={workout} /> : null}
     </div>
   );
 };
