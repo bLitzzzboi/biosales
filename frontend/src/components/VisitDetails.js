@@ -76,7 +76,7 @@ const VisitDetails = ({ visit }) => {
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
-        const response = await fetch("/api/workouts", {
+        const response = await fetch("/api/workouts/admin", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         if (response.ok) {
