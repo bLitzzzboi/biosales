@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import ImagePreview from "./ImagePreview";
+import { useInView } from 'react-intersection-observer'; // Import the useInView hook
 
 const Dealers = () => {
   const { dealers, dispatch } = useDealersContext();
@@ -215,7 +216,7 @@ const Dealers = () => {
       </div>
       {filteredDealers &&
         filteredDealers.map((dealer) => (
-          <DealerDetails key={dealer._id} dealer={dealer} />
+          <LazyDealerDetails key={dealer._id} dealer={dealer} />
         ))}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h2>{selectedDealer ? "Edit Dealer" : "Add New Dealer"}</h2>
@@ -437,6 +438,20 @@ const Dealers = () => {
           </form>
         </div>
       </Modal>
+    </div>
+  );
+};
+
+// Lazy loading for WorkoutDetails
+const LazyDealerDetails = ({ dealer }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div ref={ref}>
+      {inView ? <DealerDetails dealer={dealer} /> : null}
     </div>
   );
 };

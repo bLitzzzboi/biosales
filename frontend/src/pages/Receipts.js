@@ -4,6 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import ReceiptDetails from "../components/ReceiptDetails";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
+import { useInView } from 'react-intersection-observer'; // Import the useInView hook
 
 const Receipts = () => {
   const { receipts, dispatch } = useReceiptsContext();
@@ -211,7 +212,7 @@ const Receipts = () => {
         </button>
       </div>
       {filteredReceipts.map((receipt) => (
-        <ReceiptDetails key={receipt._id} receipt={receipt} />
+        <LazyReceiptDetails key={receipt._id} receipt={receipt} />
       ))}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h2>{selectedReceipt ? "Edit Receipt" : "Add New Receipt"}</h2>
@@ -310,6 +311,20 @@ const Receipts = () => {
           </form>
         </div>
       </Modal>
+    </div>
+  );
+};
+
+// Lazy loading for WorkoutDetails
+const LazyReceiptDetails = ({ receipt }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div ref={ref}>
+      {inView ? <ReceiptDetails receipt={receipt} /> : null}
     </div>
   );
 };
