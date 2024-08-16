@@ -1,8 +1,28 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
-// active_ingredient, formulation, crops, pests, dosage, packs_in_carton, name, price_per_pack, price_per_carton
+const policySchema = new Schema({
+  policy_name: {
+    type: String,
+    required: true
+  },
+  multiplier: {
+    type: Number,
+    required: true
+  }
+});
+
+const packSizeSchema = new Schema({
+  pack_size: {
+    type: String,
+    required: true
+  },
+  price_per_pack: {
+    type: Number,
+    required: true
+  }
+});
 
 const productSchema = new Schema({
   user_id: {
@@ -10,22 +30,15 @@ const productSchema = new Schema({
     required: true
   },
 
-  packs_in_carton: {
-    type: Number,
-    required: true
-  },
   name: {
     type: String,
     required: true
   },
-  price_per_pack: {
-    type: Number,
-    required: true
-  },
-  price_per_carton: {
-    type: Number,
-    required: true
-  },
-}, { timestamps: true })
 
-module.exports = mongoose.model('Product', productSchema)
+  policies: [policySchema],
+
+  pack_sizes: [packSizeSchema]
+
+}, { timestamps: true });
+
+module.exports = mongoose.model('Product', productSchema);
