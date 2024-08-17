@@ -96,6 +96,11 @@ const ProductDetails = ({ product }) => {
             <p key={index}>{packSize.pack_size}: {"Rs " + packSize.price_per_pack}</p>
           ))
         }
+        {
+          currentProduct.policy.map((policy, index) => (
+            <p key={index}>{policy.policy_name}: {policy.multiplier}</p>
+          ))
+        }
         </p>
         <p style={{ paddingTop: '1.5vh' }}><strong>Created At: </strong>{new Date(currentProduct.createdAt).toLocaleString()}</p>
         <span  style={{backgroundColor:"#C0E9BB", color:"#012F4F"}} className="material-symbols-outlined" onClick={handleClick}>delete</span>
