@@ -40,7 +40,7 @@ const getWorkout = async (req, res) => {
 const createWorkout = async (req, res) => {
   const {area, full_name, cnic, designation, 
     contact_no, vehicle_number, vehicle_make, 
-    vehicle_model, sales, cash_returned, login_code} = req.body
+    vehicle_model, sales, cash_returned} = req.body
 
   let emptyFields = []
 
@@ -74,9 +74,6 @@ const createWorkout = async (req, res) => {
   if(!cash_returned) {
     emptyFields.push('cash_returned')
   }
-  if(!login_code) {
-    emptyFields.push('login_code')
-  }
   if(emptyFields.length > 0) {
     return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
   }
@@ -86,7 +83,7 @@ const createWorkout = async (req, res) => {
     const user_id = req.user._id
     const workout = await Workout.create({area, full_name, cnic, designation, 
       contact_no, vehicle_number, vehicle_make, 
-      vehicle_model, sales, cash_returned,login_code, user_id})
+      vehicle_model, sales, cash_returned, user_id})
     res.status(200).json(workout)
   } catch (error) {
     res.status(400).json({error: error.message})
@@ -129,7 +126,7 @@ const updateWorkout = async (req, res) => {
     const fieldsToUpdate = [
       'area', 'full_name', 'cnic', 'designation', 
     'contact_no', 'vehicle_number', 'vehicle_make', 
-    'vehicle_model', 'sales', 'cash_returned', 'login_code'
+    'vehicle_model', 'sales', 'cash_returned',
     ];
 
     fieldsToUpdate.forEach(field => {

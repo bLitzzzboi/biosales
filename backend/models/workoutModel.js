@@ -47,10 +47,10 @@ const workoutSchema = new Schema({
     type: Number,
     required: true
   },
-  login_code: {
-    type: String,
-    required: true
-  }
+  // login_code: {
+  //   type: String,
+  //   required: true
+  // }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Workout', workoutSchema)

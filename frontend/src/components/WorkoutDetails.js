@@ -194,13 +194,14 @@ const WorkoutDetails = ({ workout }) => {
               />
             </div>
 
+
             <div style={{ marginBottom: "10px" }}>
-              <label>Login Code:</label>
+              <label>ID: </label>
               <input
                 type="text"
-                name="login_code"
+                name="id"
                 onChange={handleChange}
-                value={formData.login_code}
+                value={formData._id}
               />
             </div>
 
