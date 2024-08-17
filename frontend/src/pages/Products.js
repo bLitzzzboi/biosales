@@ -23,21 +23,24 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleAddPolicy = () => {
-    if (policyName && policyMultiplier) {
-      setPolicies(prev => [...prev, { name: policyName, multiplier: policyMultiplier }]);
-      setPolicyName('');
-      setPolicyMultiplier('');
-    }
-  };
+const handleAddPolicy = () => {
+  if (policyName && policyMultiplier) {
+    setPolicies(prev => [...prev, { policy_name: policyName, multiplier: parseFloat(policyMultiplier) }]);
+    setPolicyName('');
+    setPolicyMultiplier('');
+  }
+};
 
-  const handleAddPackSize = () => {
-    if (packSize && pricePerPack) {
-      setPackSizes(prev => [...prev, { size: packSize, price_per_pack: pricePerPack }]);
-      setPackSize('');
-      setPricePerPack('');
-    }
-  };
+  
+const handleAddPackSize = () => {
+  if (packSize && pricePerPack) {
+    setPackSizes(prev => [...prev, { pack_size: packSize, price_per_pack: parseFloat(pricePerPack) }]);
+    setPackSize('');
+    setPricePerPack('');
+  }
+};
+
+  
 
   const handleEditClick = (product) => {
     setSelectedProduct(product);
@@ -47,23 +50,26 @@ const Products = () => {
     setPolicies(product.policies || []);
     setPackSizes(product.pack_sizes || []);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     if (!user) {
       setError('You must be logged in');
       return;
     }
-
+  
     const product = {
       name,
-      packs_in_carton,
+      packs_in_carton: " ",
       policies,
       pack_sizes: packSizes
     };
-
+  
+    console.log("Product data being submitted:", product);
+    
     const method = selectedProduct ? 'PUT' : 'POST';
     const url = selectedProduct ? `/api/products/${selectedProduct._id}` : '/api/products';
+  
     try {
       const response = await fetch(url, {
         method,
@@ -73,14 +79,15 @@ const Products = () => {
           'Authorization': `Bearer ${user.token}`
         }
       });
-
+  
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
+  
       if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.error);
-        setEmptyFields(errorData.emptyFields || []);
+        setError(responseData.error);
+        setEmptyFields(responseData.emptyFields || []);
       } else {
-        const json = await response.json();
-        dispatch({ type: selectedProduct ? 'UPDATE_PRODUCT' : 'CREATE_PRODUCT', payload: json });
+        dispatch({ type: selectedProduct ? 'UPDATE_PRODUCT' : 'CREATE_PRODUCT', payload: responseData });
         resetForm();
       }
     } catch (error) {
@@ -88,6 +95,7 @@ const Products = () => {
       setError('Failed to submit product. Please try again.');
     }
   };
+  
 
   const resetForm = () => {
     setName('');
@@ -178,7 +186,7 @@ const Products = () => {
                 className={emptyFields.includes('name') ? 'error' : ''}
               />
             </div>
-            <div style={{ marginBottom: "10px" }}>
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Packs in Carton:</label>
               <input
                 type="text"
@@ -186,7 +194,7 @@ const Products = () => {
                 value={packs_in_carton}
                 className={emptyFields.includes('packs_in_carton') ? 'error' : ''}
               />
-            </div>
+            </div> */}
             <div style={{ marginBottom: "10px" }}>
               <h4>Policies</h4>
               <label>Policy Name:</label>

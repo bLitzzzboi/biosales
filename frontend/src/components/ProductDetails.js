@@ -37,6 +37,25 @@ const ProductDetails = ({ product }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle changing a policy or pack size value
+  const handleArrayChange = (e, index, arrayName) => {
+    const updatedArray = formData[arrayName].map((item, i) =>
+      i === index ? { ...item, [e.target.name]: e.target.value } : item
+    );
+    setFormData({ ...formData, [arrayName]: updatedArray });
+  };
+
+  // Add a new policy or pack size
+  const handleAddItem = (arrayName, newItem) => {
+    setFormData({ ...formData, [arrayName]: [...formData[arrayName], newItem] });
+  };
+
+  // Remove a policy or pack size
+  const handleRemoveItem = (index, arrayName) => {
+    const updatedArray = formData[arrayName].filter((_, i) => i !== index);
+    setFormData({ ...formData, [arrayName]: updatedArray });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -68,20 +87,25 @@ const ProductDetails = ({ product }) => {
 
   return (
     <div className="workout-details-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
-      
       <div className="workout-details" onClick={handleEditClick} style={{ cursor: 'pointer', textAlign: 'center', 
             border: '1px solid #ddd', padding: '16px', borderRadius: '8px', width:'25vh', height:'20vh'}}>
         <h4 style={{paddingTop: '5vh'}}>{currentProduct.name}</h4>
-        <p><strong>Price Per Pack (Rs): </strong>{currentProduct.price_per_pack}</p>
+        <p><strong>Price Per Pack (Rs): </strong>        
+        {
+          currentProduct.pack_sizes.map((packSize, index) => (
+            <p key={index}>{packSize.pack_size}: {"Rs " + packSize.price_per_pack}</p>
+          ))
+        }
+        </p>
         <p style={{ paddingTop: '1.5vh' }}><strong>Created At: </strong>{new Date(currentProduct.createdAt).toLocaleString()}</p>
         <span  style={{backgroundColor:"#C0E9BB", color:"#012F4F"}} className="material-symbols-outlined" onClick={handleClick}>delete</span>
 
         <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
           <h2>Edit Product</h2>
-          <div style={{ maxHeight: '60vh', overflow: 'auto' }}>
+          <div style={{ maxHeight: '60vh', overflow: 'auto', }}>
             <form onSubmit={handleSubmit}>
 
-              <div style={{ marginBottom: '10px' }}>
+              {/* <div style={{ marginBottom: '10px' }}>
                 <label>Packs in Carton:</label>
                 <input
                   type="text"
@@ -89,7 +113,7 @@ const ProductDetails = ({ product }) => {
                   onChange={handleChange}
                   value={formData.packs_in_carton}
                 />
-              </div>
+              </div> */}
 
               <div style={{ marginBottom: '10px' }}>
                 <label>Name:</label>
@@ -101,7 +125,7 @@ const ProductDetails = ({ product }) => {
                 />
               </div>
 
-              <div style={{ marginBottom: '10px' }}>
+              {/* <div style={{ marginBottom: '10px' }}>
                 <label>Price Per Pack:</label>
                 <input
                   type="number"
@@ -109,9 +133,9 @@ const ProductDetails = ({ product }) => {
                   onChange={handleChange}
                   value={formData.price_per_pack}
                 />
-              </div>
+              </div> */}
 
-              <div style={{ marginBottom: '10px' }}>
+              {/* <div style={{ marginBottom: '10px' }}>
                 <label>Price Per Carton:</label>
                 <input
                   type="number"
@@ -119,12 +143,71 @@ const ProductDetails = ({ product }) => {
                   onChange={handleChange}
                   value={formData.price_per_carton}
                 />
-              </div>
+              </div> */}
 
+              {/* Policies Section */}
+              <h4>Policies</h4>
+              {formData.policies.map((policy, index) => (
+                <div key={index} style={{ marginBottom: '10px' }}>
+                  <label>Policy Name:</label>
+                  <input
+                    type="text"
+                    name="policy_name"
+                    onChange={(e) => handleArrayChange(e, index, 'policies')}
+                    value={policy.policy_name}
+                  />
+                  <label>Multiplier:</label>
+                  <input
+                    type="number"
+                    name="multiplier"
+                    onChange={(e) => handleArrayChange(e, index, 'policies')}
+                    value={policy.multiplier}
+                  />
+                  <button style={{width:100}} type="button" onClick={() => handleRemoveItem(index, 'policies')}>Remove</button>
+                </div>
+              ))}
+              <button style={{width:100, marginBottom:20}} type="button" onClick={() => handleAddItem('policies', { policy_name: '', multiplier: 0 })}>
+                Add Policy
+              </button>
+
+              {/* Pack Sizes Section */}
+              <h4>Pack Sizes</h4>
+              {formData.pack_sizes.map((packSize, index) => (
+                <div key={index} style={{ marginBottom: '10px' }}>
+                  <label>Pack Size:</label>
+                  <input
+                    type="text"
+                    name="pack_size"
+                    onChange={(e) => handleArrayChange(e, index, 'pack_sizes')}
+                    value={packSize.pack_size}
+                  />
+                  <label>Price Per Pack:</label>
+                  <input
+                    type="number"
+                    name="price_per_pack"
+                    onChange={(e) => handleArrayChange(e, index, 'pack_sizes')}
+                    value={packSize.price_per_pack}
+                  />
+                  <button style={{width:100}} type="button" onClick={() => handleRemoveItem(index, 'pack_sizes')}>Remove</button>
+                </div>
+              ))}
+              <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              >
+              <button style={{width:100, marginBottom:20}} type="button" onClick={() => handleAddItem('pack_sizes', { pack_size: '', price_per_pack: 0 })}>
+                Add Pack Size
+              </button>
+              
               <button type="submit" style={{ padding: '10px 20px', borderRadius: '25px', border: 'none', backgroundColor: '#007bff', color: 'white', cursor: 'pointer' }}>
                 {loading ? <span className="spinner"></span> : null}
                 {loading ? 'Submitting...' : 'Submit'}
               </button>
+              </div>
             </form>
           </div>
         </Modal>

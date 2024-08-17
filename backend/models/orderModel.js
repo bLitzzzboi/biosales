@@ -18,7 +18,8 @@ const orderSchema = new Schema({
     {
       "productId": String,
       "quantity": Number,
-      "price": Number
+      "price": Number,
+      "policy": String,
     },
 
   ],
