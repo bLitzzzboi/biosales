@@ -218,7 +218,7 @@ const handleAddPackSize = () => {
             </div>
             {policies.map((policy, index) => (
               <div key={index} style={{ marginBottom: "10px" }}>
-                <strong>{policy.name}:</strong> Multiplier = {policy.multiplier}
+                <strong>{policy.policy_name}:</strong> Multiplier = {policy.multiplier}
               </div>
             ))}
             <div style={{ marginBottom: "10px" }}>
@@ -243,7 +243,7 @@ const handleAddPackSize = () => {
             </div>
             {packSizes.map((pack, index) => (
               <div key={index} style={{ marginBottom: "10px" }}>
-                <strong>Size:</strong> {pack.size} - <strong>Price Per Pack:</strong> ${pack.price_per_pack}
+                <strong>Size:</strong> {pack.pack_size} - <strong>Price Per Pack:</strong> ${pack.price_per_pack}
               </div>
             ))}
             <button type="submit" style={{ padding: "10px 20px", borderRadius: "25px", border: "none", backgroundColor: "#007bff", color: "white", cursor: "pointer" }}>
