@@ -243,7 +243,7 @@ const handleAddPackSize = () => {
             </div>
             {packSizes.map((pack, index) => (
               <div key={index} style={{ marginBottom: "10px" }}>
-                <strong>Size:</strong> {pack.pack_size} - <strong>Price Per Pack:</strong> ${pack.price_per_pack}
+                <strong>Size:</strong> {pack.pack_size} - <strong>Price Per Pack:</strong> Rs.{pack.price_per_pack}
               </div>
             ))}
             <button type="submit" style={{ padding: "10px 20px", borderRadius: "25px", border: "none", backgroundColor: "#007bff", color: "white", cursor: "pointer" }}>

@@ -88,16 +88,16 @@ const ProductDetails = ({ product }) => {
   return (
     <div className="workout-details-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
       <div className="workout-details" onClick={handleEditClick} style={{ cursor: 'pointer', textAlign: 'center', 
-            border: '1px solid #ddd', padding: '16px', borderRadius: '8px', width:'25vh', height:'20vh'}}>
+            border: '1px solid #ddd', padding: '16px', borderRadius: '8px', width:'25vh', height:'30vh'}}>
         <h4 style={{paddingTop: '5vh'}}>{currentProduct.name}</h4>
-        <p><strong>Price Per Pack (Rs): </strong>        
+        <p><strong>Price Per Pack (Rs): </strong>     
         {
           currentProduct.pack_sizes.map((packSize, index) => (
             <p key={index}>{packSize.pack_size}: {"Rs " + packSize.price_per_pack}</p>
           ))
         }
         {
-          currentProduct.policy.map((policy, index) => (
+          currentProduct.policies.map((policy, index) => (
             <p key={index}>{policy.policy_name}: {policy.multiplier}</p>
           ))
         }
