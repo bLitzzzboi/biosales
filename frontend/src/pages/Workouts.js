@@ -22,6 +22,7 @@ const Workouts = () => {
     vehicle_model: "",
     sales: "",
     cash_returned: "",
+    login_code: "",
   });
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
@@ -42,6 +43,7 @@ const Workouts = () => {
       vehicle_model: workout.vehicle_model,
       sales: workout.sales,
       cash_returned: workout.cash_returned,
+      login_code: workout.login_code,
     });
     setIsModalOpen(true);
   };
@@ -92,6 +94,7 @@ const Workouts = () => {
           vehicle_model: "",
           sales: "",
           cash_returned: "",
+          login_code: "",
         });
 
         setError(null);
@@ -299,6 +302,18 @@ const Workouts = () => {
                 value={formData.cash_returned}
                 className={
                   emptyFields.includes("cash_returned") ? "error" : ""
+                }
+              />
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+              <label>Login Code:</label>
+              <input
+                type="text"
+                name="login_code"
+                onChange={handleInputChange}
+                value={formData.login_code}
+                className={
+                  emptyFields.includes("login_code") ? "error" : ""
                 }
               />
             </div>

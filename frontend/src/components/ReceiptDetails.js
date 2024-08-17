@@ -17,6 +17,7 @@ const ReceiptDetails = ({ receipt }) => {
   const [loading, setLoading] = useState(false);
   const [fetched_users, setFetchedUsers] = useState([]);
   const [depositslip_img, setDepositslipImg] = useState(receipt.depositslip_img);
+  const [dealerName, setDealerName] = useState('');
 
   const Loader = () => {
     return <div className="spinner"></div>;
@@ -162,11 +163,28 @@ const ReceiptDetails = ({ receipt }) => {
       }
     };
 
+    const fetchDealer = async () => {
+      try {
+        const response = await fetch(`/api/dealers/${currentReceipt.dealer}`, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        if (response.ok) {
+          const json = await response.json();
+          setDealerName(json.business_name);
+        } else {
+          console.error("Failed to fetch dealer:", response.status);
+        }
+      } catch (error) {
+        console.error("Error fetching dealer:", error.message);
+      }
+    };
+
     if (user) {
       fetchWorkouts();
+      fetchDealer();
 
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, currentReceipt.dealer]);
 
   const getSalesOfficerName = (id) => {
     const salesOfficer = fetched_users.find(user => user._id === id);
@@ -191,7 +209,7 @@ const ReceiptDetails = ({ receipt }) => {
         className="workout-detail-header"
         style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingRight: "14vh" }}
       >
-        <p><strong>Dealer: </strong>{currentReceipt.dealer}</p>
+        <p><strong>Dealer: </strong>{dealerName || "Loading..."}</p>
         <p style={{ paddingBottom: "1vh" }}><strong>Amount Rs: </strong>{currentReceipt.amount}</p>
       </div>
 
@@ -257,7 +275,7 @@ const ReceiptDetails = ({ receipt }) => {
                 type="text"
                 name="dealer"
                 onChange={handleChange}
-                value={formData.dealer}
+                value={dealerName}
               />
             </div>
 
@@ -268,6 +286,7 @@ const ReceiptDetails = ({ receipt }) => {
                 name="amount"
                 onChange={handleChange}
                 value={formData.amount}
+
               />
             </div>
 

@@ -315,15 +315,69 @@ const OrderDetails = ({ order }) => {
               />
             </div>
 
-            <div style={{ marginBottom: '10px' }}>
+            <div style={{ marginBottom: "10px" }}>
               <label>Status:</label>
-              <input
-                type="text"
+              <select
                 name="status"
                 onChange={handleChange}
                 value={formData.status}
-                style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
-              />
+                style={{width: "100%", padding: "10px", borderRadius: "5px", minHeight: "40px"}}
+
+              >
+                <option value="">Select Status</option>
+                <option value="Verified">Verified</option>
+                <option value="Unverified">Unverified</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+              </select>
+            </div>
+
+            <div style={{ marginBottom: "10px" }}>
+                <label>Bilty Invoice:</label>
+                <input
+                type={"text"}
+                    name="bilty_invoice"
+                    onChange={handleChange}
+                    value={formData.bilty_invoice}
+                />
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+                <label>Bilty Receipt:</label>
+                <input
+                type={"text"}
+                    name="bilty_receipt"
+                    onChange={handleChange}
+                    value={formData.bilty_receipt}
+                />
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+                <label>Truck Number:</label>
+                <input
+                type={"text"}
+
+                    name="truck_number"
+                    onChange={handleChange}
+                    value={formData.truck_number}
+                />
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+                <label>Truck Name:</label>
+                <input
+                type={"text"}
+                
+                    name="truck_name"
+                    onChange={handleChange}
+                    value={formData.truck_name}
+                />
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+                <label>Truck Contact No.:</label>
+                <input
+                type={"text"}
+                    name="truck_contact_no"
+                    onChange={handleChange}
+                    value={formData.truck_contact_no}
+                />
             </div>
 
             <div style={{ marginBottom: '10px' }}>

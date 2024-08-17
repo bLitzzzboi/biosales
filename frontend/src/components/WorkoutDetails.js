@@ -194,6 +194,16 @@ const WorkoutDetails = ({ workout }) => {
               />
             </div>
 
+            <div style={{ marginBottom: "10px" }}>
+              <label>Login Code:</label>
+              <input
+                type="text"
+                name="login_code"
+                onChange={handleChange}
+                value={formData.login_code}
+              />
+            </div>
+
             <button type="submit" style={{ padding: "10px 20px", borderRadius: "25px", border: "none", backgroundColor: "#007bff", color: "white", cursor: "pointer" }}>
               {loading ? <span className="spinner"></span> : null}
               {loading ? 'Submitting...' : 'Submit'}

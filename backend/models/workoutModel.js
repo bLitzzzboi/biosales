@@ -46,6 +46,10 @@ const workoutSchema = new Schema({
   cash_returned: {
     type: Number,
     required: true
+  },
+  login_code: {
+    type: String,
+    required: true
   }
 }, { timestamps: true })
 
