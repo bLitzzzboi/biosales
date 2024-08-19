@@ -221,6 +221,15 @@ const OrderDetails = ({ order }) => {
           style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
         />
 
+        <label>Policy:</label>
+        <input
+          type="text"
+          name={`policy-${index}`}
+          value={item.policy}
+          onChange={(e) => handleItemChange(e, index, 'policy')}
+          style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
+        />
+
         <button onClick={() => handleRemoveItem(index)} style={{ color: 'red', border: 'none', background: 'none' }}>
           Remove Item
         </button>
