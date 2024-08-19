@@ -230,6 +230,15 @@ const OrderDetails = ({ order }) => {
           style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
         />
 
+        <label>Total Price without Discount:</label>
+        <input
+          type="number"
+          name={`total_price-${index}`}
+          value={item.price * item.quantity}
+          // onChange={(e) => handleItemChange(e, index, 'total_price')}
+          style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
+        />
+
         <button onClick={() => handleRemoveItem(index)} style={{ color: 'red', border: 'none', background: 'none' }}>
           Remove Item
         </button>
