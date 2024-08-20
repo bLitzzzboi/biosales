@@ -69,7 +69,7 @@ const OrderDetails = ({ order }) => {
       },
       head: [['Product', 'Quantity', 'Price', 'Total Price', 'Policy','Final Price']],
       body: formData.items.map(item => [
-        getProductName(item.productId),
+        getProductName(item.productId)+` ${item.pack_size}`,
         item.quantity,
         item.price,
         item.price * item.quantity,
