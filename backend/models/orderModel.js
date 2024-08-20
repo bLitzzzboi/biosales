@@ -20,6 +20,7 @@ const orderSchema = new Schema({
       "quantity": Number,
       "price": Number,
       "policy": String,
+      "multiplier": Number,
     },
 
   ],

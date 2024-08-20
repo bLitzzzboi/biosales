@@ -5,6 +5,8 @@ import Modal from '../pages/Modal';
 import ImagePreview from '../pages/ImagePreview';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/storage';
+import { jsPDF } from "jspdf";
+import autoTable from 'jspdf-autotable';
 
 const OrderDetails = ({ order }) => {
   const { dispatch } = useOrdersContext();
@@ -22,6 +24,63 @@ const OrderDetails = ({ order }) => {
     return <div className="spinner"></div>;
   };
 
+  const generatePdf = () => {
+    const doc = new jsPDF();
+  
+    // Set Logo
+    const img = new Image();
+    img.src = '/bflogo_2.png';
+    const logoWidth = 40; // New width for the logo
+    const logoHeight = 40; // New height for the logo
+    doc.addImage(img, 'PNG', 14, 10, logoWidth, logoHeight);
+  
+    // Adjust Y position for spacing
+    const spaceAfterLogo = 15; // Additional space after the logo
+    const titleYPosition = 10 + logoHeight + spaceAfterLogo;
+  
+    // Set title with green color
+    doc.setFontSize(22);
+    doc.setTextColor('#012F4F'); // Dark green
+    doc.text("Order Details", 14, titleYPosition);
+  
+    // Add basic order information with custom colors
+    doc.setFontSize(12);
+    doc.setTextColor('#012F4F'); // Green
+    doc.text(`Sales Officer: ${getSalesOfficerName(currentOrder.sales_officer)}`, 14, titleYPosition + 8);
+    doc.text(`Dealer: ${dealerName}`, 14, titleYPosition + 16);
+    // doc.text(`Policy: ${currentOrder.policy}`, 14, titleYPosition + 24);
+    doc.text(`Status: ${currentOrder.status}`, 14, titleYPosition + 32);
+    doc.text(`Amount: ${currentOrder.amount}`, 14, titleYPosition + 40);
+    doc.text(`Created At: ${new Date(currentOrder.createdAt).toLocaleString()}`, 14, titleYPosition + 48);
+  
+    // Add table for items with green headers and white background
+    autoTable(doc, {
+      startY: titleYPosition + 58,
+      headStyles: {
+        fillColor: '#43a047', // Light green
+        textColor: '#ffffff', // White
+      },
+      bodyStyles: {
+        fillColor: '#e8f5e9', // Very light green
+        textColor: '#000000', // Black
+      },
+      alternateRowStyles: {
+        fillColor: '#ffffff', // White
+      },
+      head: [['Product', 'Quantity', 'Price', 'Total Price', 'Policy']],
+      body: formData.items.map(item => [
+        getProductName(item.productId),
+        item.quantity,
+        item.price,
+        item.price * item.quantity,
+        item.policy
+      ]),
+    });
+  
+    // Save the PDF
+    doc.save(`Order_${currentOrder._id}.pdf`);
+  };
+      
   const handleUpload = async (event, setImage) => {
     const file = event.target.files[0];
     if (file) {
@@ -422,6 +481,10 @@ const OrderDetails = ({ order }) => {
             <button type="button" onClick={handleAddItem} style={{ marginBottom: '10px' }}>
               Add Item
             </button>
+
+            <button onClick={generatePdf} style={{ padding: '10px 20px', borderRadius: '25px', border: 'none', backgroundColor: '#007bff', color: 'white', cursor: 'pointer', marginTop: '20px' }}>
+        Generate PDF
+      </button>
 
             <button type="submit" style={{ padding: '10px 20px', borderRadius: '25px', border: 'none', backgroundColor: '#007bff', color: 'white', cursor: 'pointer' }}>
               {loading ? <span className="spinner"></span> : null}
