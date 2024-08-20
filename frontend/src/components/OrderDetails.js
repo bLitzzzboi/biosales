@@ -50,7 +50,7 @@ const OrderDetails = ({ order }) => {
     doc.text(`Dealer: ${dealerName}`, 14, titleYPosition + 16);
     // doc.text(`Policy: ${currentOrder.policy}`, 14, titleYPosition + 24);
     doc.text(`Status: ${currentOrder.status}`, 14, titleYPosition + 32);
-    doc.text(`Amount: ${currentOrder.amount}`, 14, titleYPosition + 40);
+    doc.text(`Amount: Rs. ${currentOrder.amount}`, 14, titleYPosition + 40);
     doc.text(`Created At: ${new Date(currentOrder.createdAt).toLocaleString()}`, 14, titleYPosition + 48);
   
     // Add table for items with green headers and white background
@@ -67,13 +67,14 @@ const OrderDetails = ({ order }) => {
       alternateRowStyles: {
         fillColor: '#ffffff', // White
       },
-      head: [['Product', 'Quantity', 'Price', 'Total Price', 'Policy']],
+      head: [['Product', 'Quantity', 'Price', 'Total Price', 'Policy','Final Price']],
       body: formData.items.map(item => [
         getProductName(item.productId),
         item.quantity,
         item.price,
         item.price * item.quantity,
-        item.policy
+        item.policy,
+        item.price * item.quantity * item.multiplier
       ]),
     });
   

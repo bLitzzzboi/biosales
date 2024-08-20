@@ -21,6 +21,7 @@ const orderSchema = new Schema({
       "price": Number,
       "policy": String,
       "multiplier": Number,
+      "pack_size": String,
     },
 
   ],
