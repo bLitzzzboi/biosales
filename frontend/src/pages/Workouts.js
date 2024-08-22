@@ -5,12 +5,16 @@ import WorkoutDetails from "../components/WorkoutDetails";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
+import { useSignup } from "../hooks/useSignup"
 
 const Workouts = () => {
   const { workouts, dispatch } = useWorkoutsContext();
   const { user } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const {signup, isLoading} = useSignup()
   const [formData, setFormData] = useState({
     area: "",
     full_name: "",
@@ -81,6 +85,9 @@ const Workouts = () => {
           dispatch({ type: "UPDATE_WORKOUT", payload: json });
         } else {
           dispatch({ type: "CREATE_WORKOUT", payload: json });
+          e.preventDefault()
+
+          await signup(email, password)
         }
 
         setFormData({
@@ -105,6 +112,9 @@ const Workouts = () => {
       setError(error.message);
     }
   };
+
+
+
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -305,6 +315,28 @@ const Workouts = () => {
                 }
               />
             </div>
+
+            {/* SIGNUP STARTS HERE */}
+
+            <h3>Sign Up</h3>
+            
+            <label>Email address:</label>
+            <input 
+              type="email" 
+              onChange={(e) => setEmail(e.target.value)} 
+              value={email} 
+            />
+            <label>Password:</label>
+            <input 
+              type="password" 
+              onChange={(e) => setPassword(e.target.value)} 
+              value={password} 
+            />
+
+            {/* <button disabled={isLoading}>Sign up</button> */}
+            {/* {error && <div className="error">{error}</div>} */}
+
+
             {/* <div style={{ marginBottom: "10px" }}>
               <label>Login Code:</label>
               <input
