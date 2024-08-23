@@ -39,7 +39,7 @@ const farmermeetingSchema = new Schema({
   },
   meeting_photo: {
     type: String,
-    required: true
+    // required: true
   },
 }, { timestamps: true })
 
