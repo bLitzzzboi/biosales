@@ -72,7 +72,7 @@ const createFarmerMeeting = async (req, res) => {
   try {
     const user_id = req.user._id
     const farmermeeting = await FarmerMeeting.create({sales_officer, farmer_name, area_of_land, address,
-        contact_no, participant_no, total_expense,meeting_photo, user_id})
+        contact_no, participant_no, total_expense, user_id})
     res.status(200).json(farmermeeting)
   } catch (error) {
     console.log("Error creating Farmer Meeting: ", error.message)

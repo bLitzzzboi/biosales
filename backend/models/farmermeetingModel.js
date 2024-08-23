@@ -37,10 +37,6 @@ const farmermeetingSchema = new Schema({
     type: String,
     required: true
   },
-  meeting_photo: {
-    type: String,
-    // required: true
-  },
 }, { timestamps: true })
 
 module.exports = mongoose.model('FarmerMeeting', farmermeetingSchema)
