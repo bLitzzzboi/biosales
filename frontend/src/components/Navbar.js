@@ -29,7 +29,7 @@ const Navbar = () => {
           (
             <div>
               {/* <Link to="/login" className="navbar-button login-button">Login</Link> */}
-              {/* <Link to="/signup" className="navbar-button login-button">Signup</Link> */}
+              <Link to="/signup" className="navbar-button login-button">Signup</Link>
             </div>
           )
           }
