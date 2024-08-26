@@ -118,31 +118,27 @@ const updateDealer = async (req, res) => {
   }
 
   try {
-    // Check if the workout exists
+    // Check if the dealer exists
     let dealer = await Dealer.findById(id);
 
     if (!dealer) {
       return res.status(404).json({ error: 'Dealer not found' });
     }
 
-    // Update the workout fields based on req.body
+    // Update the dealer fields based on req.body
+    const fieldsToUpdate = [
+      'sales_officer', 'business_name', 'personal_name', 
+      'cnic_front_img', 'cnic_back_img', 'licence_img', 
+      'address', 'contact_no', 'sales', 'cash_returned'
+    ];
 
-    // sales_officer, business_name, personal_name, 
-    // cnic_front_img, cnic_back_img, licence_img, address, contact_no
-    
-    dealer.sales_officer = req.body.sales_officer;
-    dealer.business_name = req.body.business_name;
-    dealer.personal_name = req.body.personal_name;
-    dealer.cnic_front_img = req.body.cnic_front_img;
-    dealer.cnic_back_img = req.body.cnic_back_img;
-    dealer.licence_img = req.body.licence_img;
-    dealer.address = req.body.address;
-    dealer.contact_no = req.body.contact_no;
-    dealer.sales = req.body.sales;
-    dealer.cash_returned = req.body.cash_returned;
+    fieldsToUpdate.forEach(field => {
+      if (req.body[field] !== undefined) {
+        dealer[field] = req.body[field];
+      }
+    });
 
-
-    // Save the updated workout
+    // Save the updated dealer
     dealer = await dealer.save();
 
     res.status(200).json(dealer);

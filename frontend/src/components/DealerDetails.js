@@ -143,21 +143,29 @@ const DealerDetails = ({ dealer }) => {
         className="workout-detail-header"
         style={{ display: "flex", justifyContent: "space-between", paddingRight: "14vh" }}
       >
+        
         <p><strong>Sales Officer: </strong>{getSalesOfficerName(currentDealer.sales_officer)}</p>
-        {/* <p style={{ paddingRight: "8vh", paddingBottom: "1vh" }}><strong>Status:</strong>{currentReceipt.status}</p> */}
+        <p style={{ paddingTop: "1vh" }}><strong>Sales: </strong>{currentDealer.sales}</p>
 
 
       </div>
 
       <div
         className="workout-detail-header"
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingRight: "23.7vh" }}
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingRight: "12vh" }}
       >
         <p style={{paddingTop:"1vh"}}><strong>Address: </strong>{currentDealer.address}</p>
-        {/* <p style={{ paddingBottom: "1vh" }}><strong>Amount:</strong>{currentReceipt.amount}</p> */}
+        <p style={{ paddingTop: "1vh" }}><strong>Cash Returned: </strong>{currentDealer.cash_returned}</p>
       </div>
 
+
+      <div
+        className="workout-detail-header"
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingRight: "12vh" }}
+      >
       <p style={{ paddingTop: "1vh" }}><strong>Personal Name: </strong>{currentDealer.personal_name}</p>
+      <p style={{ paddingTop: "1vh" }}><strong>Accounts Receivable: </strong>{currentDealer.sales - currentDealer.cash_returned}</p>
+      </div>
       <p style={{ paddingTop: "1.5vh" }}><strong>Created At: </strong>{new Date(currentDealer.createdAt).toLocaleString()}</p>
       <span style={{backgroundColor:"#C0E9BB", color:"#012F4F"}}  className="material-symbols-outlined" onClick={handleClick}>delete</span>
       
@@ -319,6 +327,26 @@ const DealerDetails = ({ dealer }) => {
                 name="contact_no"
                 onChange={handleChange}
                 value={formData.contact_no}
+              />
+            </div>
+
+            <div style={{ marginBottom: "10px" }}>
+              <label>Sales:</label>
+              <input
+                type="number"
+                name="sales"
+                onChange={handleChange}
+                value={formData.sales}
+              />
+            </div>
+
+            <div style={{ marginBottom: "10px" }}>
+              <label>Cash Returned:</label>
+              <input
+                type="number"
+                name="cash_returned"
+                onChange={handleChange}
+                value={formData.cash_returned}
               />
             </div>
             

@@ -85,8 +85,13 @@ const WorkoutDetails = ({ workout }) => {
         <p><strong>Contact No: </strong>{currentWorkout.contact_no}</p>
         <p style={{ paddingBottom: "1vh" }}><strong>Cash Returned Rs: </strong>{currentWorkout.cash_returned}</p>
       </div>
-
+      <div
+        className="workout-detail-header"
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingRight: "14vh" }}
+      >
       <p style={{ paddingTop: "1vh" }}><strong>Area: </strong>{currentWorkout.area}</p>
+      <p style={{ paddingTop: "1vh" }}><strong>Accounts Receivable: </strong>{currentWorkout.sales - currentWorkout.cash_returned}</p>
+      </div>
       <p style={{ paddingTop: "1.5vh" }}><strong>Created At: </strong>{new Date(currentWorkout.createdAt).toLocaleString()}</p>
       <span style={{backgroundColor:"#C0E9BB", color:"#012F4F"}} className="material-symbols-outlined" onClick={handleClick}>delete</span>
       

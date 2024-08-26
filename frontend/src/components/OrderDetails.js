@@ -487,8 +487,8 @@ const OrderDetails = ({ order }) => {
 
               >
                 <option value="">Select Status</option>
-                <option value="Verified">Verified</option>
-                <option value="Unverified">Unverified</option>
+                <option value="Verified">Approved</option>
+                <option value="Unverified">Unapproved</option>
                 <option value="Shipped">Shipped</option>
                 <option value="Delivered">Delivered</option>
               </select>

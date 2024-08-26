@@ -23,6 +23,8 @@ const Dealers = () => {
   const [licence_img, setLicence_img] = useState("");
   const [address, setAddress] = useState("");
   const [contact_no, setContact_no] = useState("");
+  const [sales, setSales] = useState("");
+  const [cash_returned, setCash_returned] = useState("");
   const [fetched_users, setFetchedUsers] = useState([]);
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
@@ -39,6 +41,8 @@ const Dealers = () => {
     licence_img: "",
     address: "",
     contact_no: "",
+    sales: "",
+    cash_returned: "",
   });
 
   const navigate = useNavigate();
@@ -61,6 +65,8 @@ const Dealers = () => {
       licence_img,
       address,
       contact_no,
+      sales,
+      cash_returned,
     };
 
     try {
@@ -89,6 +95,8 @@ const Dealers = () => {
         setLicence_img("");
         setAddress("");
         setContact_no("");
+        setSales("");
+        setCash_returned("");
 
         setError(null);
         setEmptyFields([]);
@@ -419,6 +427,26 @@ const Dealers = () => {
                 onChange={(e) => setContact_no(e.target.value)}
                 value={contact_no}
                 className={emptyFields.includes("contact_no") ? "error" : ""}
+              />
+            </div>
+
+            <div style={{ marginBottom: "10px" }}>
+              <label>Sales:</label>
+              <input
+                type="text"
+                onChange={(e) => setSales(e.target.value)}
+                value={sales}
+                className={emptyFields.includes("sales") ? "error" : ""}
+              />
+            </div>
+
+            <div style={{ marginBottom: "10px" }}>
+              <label>Cash Returned:</label>
+              <input
+                type="text"
+                onChange={(e) => setCash_returned(e.target.value)}
+                value={cash_returned}
+                className={emptyFields.includes("cash_returned") ? "error" : ""}
               />
             </div>
 

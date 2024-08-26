@@ -264,8 +264,8 @@ const ReceiptDetails = ({ receipt }) => {
 
               >
                 <option value="">Select Status</option>
-                <option value="Verified">Verified</option>
-                <option value="Unverified">Unverified</option>
+                <option value="Verified">Approved</option>
+                <option value="Unverified">Unapproved</option>
               </select>
             </div>
 
