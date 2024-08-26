@@ -22,6 +22,7 @@ const ReceiptDetails = ({ receipt }) => {
   const [depositslip_img, setDepositslipImg] = useState(receipt.depositslip_img);
   const [dealerName, setDealerName] = useState('');
   const [dealerAddress, setDealerAddress] = useState('');
+  const [policyName, setPolicyName] = useState('');
 
   const Loader = () => {
     return <div className="spinner"></div>;
@@ -65,6 +66,7 @@ const ReceiptDetails = ({ receipt }) => {
     doc.text(`Created At: ${new Date(currentReceipt.createdAt).toLocaleString()}`, 14, infoStartY + lineSpacing * 4);
     doc.text(`Deposit Slip No: ${currentReceipt.deposit_slip_no}`, 14, infoStartY + lineSpacing * 5);
     doc.text(`Bank: ${currentReceipt.bank}`, 14, infoStartY + lineSpacing * 6);
+    doc.text(`Policy: ${policyName}`, 14, infoStartY + lineSpacing * 7);
   
     // Add a divider before signature fields
     const dividerStartY = infoStartY + lineSpacing * 7 + 10;
@@ -239,9 +241,27 @@ const ReceiptDetails = ({ receipt }) => {
       }
     };
 
+    const fetchPolicy = async () => {
+      try {
+        const response = await fetch(`/api/policys/${currentReceipt.policy}`, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+
+        if (response.ok) {
+          const json = await response.json();
+          setPolicyName(json.policy_name);
+        } else {
+          console.error("Failed to fetch policy:", response.status);
+        }
+      } catch (error) {
+        console.error("Error fetching policy:", error.message);
+      }
+    };
+
     if (user) {
       fetchWorkouts();
       fetchDealer();
+      fetchPolicy();
 
     }
   }, [dispatch, user, currentReceipt.dealer]);
@@ -348,6 +368,18 @@ const ReceiptDetails = ({ receipt }) => {
                 value={formData.amount}
 
               />
+            </div>
+
+            <div style={{ marginBottom: "10px" }}>
+              <label>Policy:</label>
+              <input
+
+                name="policy"
+                onChange={handleChange}
+                value={policyName}
+                style={{width: "100%", padding: "10px", borderRadius: "5px", minHeight: "40px"}}
+              >
+              </input>
             </div>
 
             <div style={{ marginBottom: "10px" }}>
