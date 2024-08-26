@@ -246,6 +246,14 @@ const OrderDetails = ({ order }) => {
   
 
   const EditableItemTile = ({ item, index }) => {
+    const selectedProduct = fetchedProducts.find(product => product._id === item.productId);
+
+    console.log("Selected Product:", selectedProduct); // Debugging log for selectedProduct
+  
+    // Safeguard: Ensure availablePackSizes and availablePolicies are arrays, even if undefined
+    const availablePackSizes = selectedProduct && Array.isArray(selectedProduct.pack_sizes) ? selectedProduct.pack_sizes : [];
+    const availablePolicies = selectedProduct && Array.isArray(selectedProduct.policies) ? selectedProduct.policies : [];
+    let newPrice = 0;
     return (
       <div style={tileStyle}>
         <label>Product:</label>
@@ -272,15 +280,53 @@ const OrderDetails = ({ order }) => {
           style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
         />
 
-        <label>Price:</label>
+        {/* <label>Pack Size:</label>
+        <input
+          name={`pack_size-${index}`}
+          value={item.pack_size}
+          onChange={(e) => handleItemChange(e, index, 'pack_size')}
+          style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
+        >
+        </input> */}
+        <label>Pack Size:</label>
+        <select
+          name={`packSize-${index}`}
+          value={item.pack_size || ''}
+          onChange={(e) => handleItemChange(e, index, 'pack_size')}
+          style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
+        >
+          <option value="">Select Pack Size</option>
+          {availablePackSizes.map((size, i) => (
+            <option key={i} value={size.pack_size}>
+              {size.pack_size}
+              {" Rs." + (item.price = size.price_per_pack)}
+
+            </option>
+            // add item.price = size.price_per_pack
+          )
+          )}
+        </select>
+
+
+
+          {/* <option value="">Select Pack Size</option>
+          {fetchedProducts.map(product => (
+            <option key={product._id} value={product.pack_size}>
+              {product.pack_size}
+              {console.log(product.pack_size)}
+            </option>
+          ))}
+        </select> */}
+
+        {/* <label>Price:</label>
         <input
           type="number"
           name={`price-${index}`}
           value={item.price}
           onChange={(e) => handleItemChange(e, index, 'price')}
           style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
-        />
-
+        /> */}
+{/* 
         <label>Policy:</label>
         <input
           type="text"
@@ -288,16 +334,54 @@ const OrderDetails = ({ order }) => {
           value={item.policy}
           onChange={(e) => handleItemChange(e, index, 'policy')}
           style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
-        />
+        /> */}
 
-        <label>Total Price without Discount:</label>
+        <label>Policy:</label>
+        <select
+
+          name={`policy-${index}`}
+          value={item.policy}
+          onChange={(e) => {handleItemChange(e, index, 'policy');
+        }
+        }
+          style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
+        >
+          <option value="">Select Policy</option>
+          {availablePolicies.map((policy, i) => (
+            <option key={i} value={policy.policy_name}>
+              {policy.policy_name}
+            </option>
+          ))}
+        </select>
+
+        <label>Multiplier:</label>
+        <select
+
+          name={`multiplier-${index}`}  
+          value={item.multiplier}
+          onChange={(e) => handleItemChange(e, index, 'multiplier')
+          }
+        
+          style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
+        >
+          <option value="">Select Multiplier</option>
+          {availablePolicies.map((policy, i) => (
+            <option key={i} value={policy.multiplier}>
+              {policy.multiplier}
+            </option>
+          ))}
+        </select>
+
+
+        {/* <label>Policy Price:</label>
         <input
           type="number"
-          name={`total_price-${index}`}
-          value={item.price * item.quantity}
-          // onChange={(e) => handleItemChange(e, index, 'total_price')}
+          name={`price-${index}`}
+          value={item.price * item.multiplier}
+          onChange={(e) => handleItemChange(e, index, 'price')}
           style={{ width: '100%', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}
-        />
+        /> */}
+
 
         <button onClick={() => handleRemoveItem(index)} style={{ color: 'red', border: 'none', background: 'none' }}>
           Remove Item
@@ -439,7 +523,7 @@ const OrderDetails = ({ order }) => {
                 />
             </div>
             <div style={{ marginBottom: "10px" }}>
-                <label>Truck Name:</label>
+                <label>Driver Name:</label>
                 <input
                 type={"text"}
                 

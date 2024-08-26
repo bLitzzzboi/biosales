@@ -14,6 +14,12 @@ const VisitDetails = ({ visit }) => {
   const [loading, setLoading] = useState(false);
   const [fetched_users, setFetchedUsers] = useState([]);
 
+  const openLocationInMaps = (location) => {
+    const url = `https://www.google.com/maps/search/?api=1&query=${location}`;
+    window.open(url, '_blank');
+  };
+
+
   const Loader = () => {
     return <div className="spinner"></div>;
   };
@@ -179,6 +185,18 @@ const VisitDetails = ({ visit }) => {
                 value={formData.location}
               />
             </div>
+
+            <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              openLocationInMaps(formData.location);
+            }}
+            style={{ marginBottom: "10px", padding: "10px 20px", borderRadius: "25px", border: "none", backgroundColor: "#007bff", color: "white", cursor: "pointer" }}
+          >
+            Open in Maps
+          </button>
+
 
             <button type="submit" style={{ padding: "10px 20px", borderRadius: "25px", border: "none", backgroundColor: "#007bff", color: "white", cursor: "pointer" }}>
               {loading ? <span className="spinner"></span> : null}

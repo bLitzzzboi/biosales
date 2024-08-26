@@ -41,6 +41,14 @@ const dealerSchema = new Schema({
     type: String,
     required: true
   },
+  sales : {
+    type: Number,
+    required: true
+  },
+  cash_returned : {
+    type: Number,
+    required: true
+  },
 }, { timestamps: true })
 
 module.exports = mongoose.model('Dealer', dealerSchema)

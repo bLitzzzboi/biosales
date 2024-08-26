@@ -39,7 +39,9 @@ const getDealer = async (req, res) => {
 // create new workout
 const createDealer = async (req, res) => {
   const {sales_officer, business_name, personal_name, 
-    cnic_front_img, cnic_back_img, licence_img, address, contact_no} = req.body
+    cnic_front_img, cnic_back_img, licence_img, address, contact_no,
+    sales, cash_returned
+  } = req.body
 
   let emptyFields = []
 
@@ -67,6 +69,12 @@ const createDealer = async (req, res) => {
   if(!contact_no) {
     emptyFields.push('contact_no')
   }
+  if(!sales) {
+    emptyFields.push('sales')
+  }
+  if(!cash_returned) {
+    emptyFields.push('cash_returned')
+  }
   if(emptyFields.length > 0) {
     return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
   }
@@ -75,7 +83,8 @@ const createDealer = async (req, res) => {
   try {
     const user_id = req.user._id
     const dealer = await Dealer.create({sales_officer, business_name, personal_name, 
-        cnic_front_img, cnic_back_img, licence_img, address, contact_no, user_id})
+        cnic_front_img, cnic_back_img, licence_img, address, contact_no, sales, cash_returned,
+         user_id})
     res.status(200).json(dealer)
   } catch (error) {
     console.log("Error creating dealer: ", error.message)
@@ -129,6 +138,8 @@ const updateDealer = async (req, res) => {
     dealer.licence_img = req.body.licence_img;
     dealer.address = req.body.address;
     dealer.contact_no = req.body.contact_no;
+    dealer.sales = req.body.sales;
+    dealer.cash_returned = req.body.cash_returned;
 
 
     // Save the updated workout
