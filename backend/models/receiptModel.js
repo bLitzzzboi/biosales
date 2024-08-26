@@ -37,6 +37,10 @@ const receiptSchema = new Schema({
     type: String,
     required: true
   },
+  policy : {
+    type: String,
+    required: true
+  },
 }, { timestamps: true })
 
 module.exports = mongoose.model('Receipt', receiptSchema)

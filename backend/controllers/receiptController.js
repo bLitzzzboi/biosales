@@ -38,7 +38,7 @@ const getReceipt = async (req, res) => {
 
 // create new workout
 const createReceipt = async (req, res) => {
-  const {sales_officer, status, dealer, amount, bank, deposit_slip_no, depositslip_img} = req.body
+  const {sales_officer, status, dealer, amount, bank, deposit_slip_no, depositslip_img, policy} = req.body
 
   let emptyFields = []
 
@@ -63,6 +63,9 @@ const createReceipt = async (req, res) => {
   if(!depositslip_img) {
     emptyFields.push('depositslip_img')
   }
+  if(!policy) {
+    emptyFields.push('policy')
+  }
   if(emptyFields.length > 0) {
     return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
   }
@@ -70,7 +73,7 @@ const createReceipt = async (req, res) => {
   // add doc to db
   try {
     const user_id = req.user._id
-    const receipt = await Receipt.create({sales_officer, status, dealer, amount, bank, deposit_slip_no,depositslip_img, user_id})
+    const receipt = await Receipt.create({sales_officer, status, dealer, amount, bank, deposit_slip_no,depositslip_img,policy, user_id})
     res.status(200).json(receipt)
   } catch (error) {
     console.log("Error creating receipt: ", error.message)
@@ -119,6 +122,7 @@ const updateReceipt = async (req, res) => {
     receipt.bank = req.body.bank;
     receipt.deposit_slip_no = req.body.deposit_slip_no;
     receipt.depositslip_img = req.body.depositslip_img;
+    receipt.policy = req.body.policy;
 
 
     // Save the updated workout
