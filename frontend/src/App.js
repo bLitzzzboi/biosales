@@ -16,6 +16,7 @@ import FarmerMeetings from './pages/Farmer_Meetings'
 import DailyVisits from './pages/Daily_Visits'
 import Dealers from './pages/Dealers'
 import Policys from './pages/Policys';
+import CreditNotes from './pages/CreditNotes'
 
 
 function App() {
@@ -78,6 +79,11 @@ function App() {
             path='/Policys'
             element={user ? <Policys /> : <Navigate to="/login" />}            
             component={Policys}
+            />
+            <Route
+            path='/CreditNotes'
+            element={user ? <CreditNotes /> : <Navigate to="/login" />}            
+            component={CreditNotes}
             />
           </Routes>
         </div>

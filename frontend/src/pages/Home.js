@@ -19,6 +19,7 @@ import Daily_Visits from './Daily_Visits';
 import Workouts from './Workouts';
 import Dealers from './Dealers';
 import Policys from './Policys';
+import CreditNotes from './CreditNotes';
 // import './Home.css';
 
 const Home = () => {
@@ -117,6 +118,9 @@ const Home = () => {
         )}
          {activePage === 'Policys' && (
           <Policys />
+        )}
+         {activePage === 'CreditNotes' && (
+          <CreditNotes />
         )}
 
 

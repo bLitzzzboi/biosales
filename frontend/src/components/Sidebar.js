@@ -7,6 +7,7 @@ import { MdEditCalendar, MdEmojiTransportation, MdContactEmergency,MdReceipt } f
 
 const Sidebar = ({ activePage, onPageChange }) => {
   const handleButtonClick = (page) => {
+    console.log('page', page);
     onPageChange(page);
   };
 
@@ -79,6 +80,14 @@ const Sidebar = ({ activePage, onPageChange }) => {
               className={`sidebar-btn ${activePage === 'Policys' ? 'active' : ''}`}
             >
               <span className="sidebar-icon"><MdReceipt /></span> Policies
+            </button>
+          </li>
+          <li className={activePage === 'CreditNotes' ? 'active' : ''}>
+            <button
+              onClick={() => handleButtonClick('CreditNotes')}
+              className={`sidebar-btn ${activePage === 'CreditNotes' ? 'active' : ''}`}
+            >
+              <span className="sidebar-icon"><MdReceipt /></span> Credit Notes
             </button>
           </li>
         </ul>

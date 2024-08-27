@@ -11,6 +11,7 @@ import { FarmerMeetingsContextProvider } from './context/FarmerMeetingContext';
 import { VisitsContextProvider } from './context/VisitContext';
 import { OrdersContextProvider } from './context/OrderContext';
 import { PolicysContextProvider } from './context/PolicyContext';
+import { CreditNotesContextProvider } from './context/CreditNoteContext';
 import firebase from "firebase/compat/app"
 
 const firebaseConfig = {
@@ -37,7 +38,9 @@ root.render(
                 <VisitsContextProvider>
                   <OrdersContextProvider>
                     <PolicysContextProvider>
+                      <CreditNotesContextProvider>
                   <App />
+                      </CreditNotesContextProvider>
                     </PolicysContextProvider>
                   </OrdersContextProvider>
                 </VisitsContextProvider>
