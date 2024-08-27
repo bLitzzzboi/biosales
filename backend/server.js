@@ -11,6 +11,7 @@ const farmermeetingRoutes = require('./routes/farmermeeting')
 const visitRoutes = require('./routes/visits')
 const orderRoutes = require('./routes/orders')
 const policyRoutes = require('./routes/policys')
+const creditnoteRoutes = require('./routes/creditnotes')
 
 // express app
 const app = express()
@@ -33,6 +34,7 @@ app.use('/api/farmermeetings', farmermeetingRoutes)
 app.use('/api/visits', visitRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/policys', policyRoutes)
+app.use('/api/creditnotes', creditnoteRoutes)
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
