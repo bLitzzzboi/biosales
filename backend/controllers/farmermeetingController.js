@@ -39,7 +39,7 @@ const getFarmerMeeting = async (req, res) => {
 // create new workout
 const createFarmerMeeting = async (req, res) => {
   const {sales_officer, farmer_name, area_of_land, address,
-     contact_no, participant_no, total_expense } = req.body
+     contact_no, participant_no, total_expense, picture } = req.body
 
   let emptyFields = []
 
@@ -64,6 +64,9 @@ const createFarmerMeeting = async (req, res) => {
   if(!total_expense) {
     emptyFields.push('total_expense')
   }
+  if(!picture) {
+    emptyFields.push('picture')
+  }
   if(emptyFields.length > 0) {
     return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
   }
@@ -72,7 +75,7 @@ const createFarmerMeeting = async (req, res) => {
   try {
     const user_id = req.user._id
     const farmermeeting = await FarmerMeeting.create({sales_officer, farmer_name, area_of_land, address,
-        contact_no, participant_no, total_expense, user_id})
+        contact_no, participant_no, total_expense,picture, user_id})
     res.status(200).json(farmermeeting)
   } catch (error) {
     console.log("Error creating Farmer Meeting: ", error.message)
@@ -125,6 +128,7 @@ const updateFarmerMeeting = async (req, res) => {
     farmermeeting.contact_no = req.body.contact_no;
     farmermeeting.participant_no = req.body.participant_no;
     farmermeeting.total_expense = req.body.total_expense;
+    farmermeeting.picture = req.body.picture;
 
 
     // Save the updated workout

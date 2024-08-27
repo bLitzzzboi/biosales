@@ -37,6 +37,10 @@ const farmermeetingSchema = new Schema({
     type: String,
     required: true
   },
+  picture : {
+    type: String,
+    required: true
+  },
 }, { timestamps: true })
 
 module.exports = mongoose.model('FarmerMeeting', farmermeetingSchema)

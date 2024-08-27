@@ -38,21 +38,40 @@ const getVisit = async (req, res) => {
 
 // create new workout
 const createVisit = async (req, res) => {
-  const {sales_officer, area, description, km_done, location } = req.body
+  const {sales_officer, farmer_name, farmer_address, farmer_contact, total_area, crop, suggestion,
+     location } = req.body
 
   let emptyFields = []
 
   if(!sales_officer) {
     emptyFields.push('sales_officer')
   }
-  if(!area) {
-    emptyFields.push('area')
+  // if(!area) {
+  //   emptyFields.push('area')
+  // }
+  // if(!description) {
+  //   emptyFields.push('description')
+  // }
+  // if(!km_done) {
+  //   emptyFields.push('km_done')
+  // }
+  if(!farmer_name) {
+    emptyFields.push('farmer_name')
   }
-  if(!description) {
-    emptyFields.push('description')
+  if(!farmer_address) {
+    emptyFields.push('farmer_address')
   }
-  if(!km_done) {
-    emptyFields.push('km_done')
+  if(!farmer_contact) {
+    emptyFields.push('farmer_contact')
+  }
+  if(!total_area) {
+    emptyFields.push('total_area')
+  }
+  if(!crop) {
+    emptyFields.push('crop')
+  }
+  if(!suggestion) {
+    emptyFields.push('suggestion')
   }
   if(!location) {
     emptyFields.push('location')
@@ -64,7 +83,8 @@ const createVisit = async (req, res) => {
   // add doc to db
   try {
     const user_id = req.user._id
-    const visit = await Visit.create({sales_officer, area, description, km_done, location, user_id})
+    const visit = await Visit.create({sales_officer, farmer_name, farmer_address, farmer_contact, total_area, crop, suggestion,
+       location, user_id})
     res.status(200).json(visit)
   } catch (error) {
     console.log("Error creating Visit: ", error.message)
@@ -110,9 +130,15 @@ const updateVisit = async (req, res) => {
     // sales_officer, area, description, km_done, location 
     
     visit.sales_officer = req.body.sales_officer;
-    visit.area = req.body.area;
-    visit.description = req.body.description;
-    visit.km_done = req.body.km_done;
+    visit.farmer_name = req.body.farmer_name;
+    visit.farmer_address = req.body.farmer_address;
+    visit.farmer_contact = req.body.farmer_contact;
+    visit.total_area = req.body.total_area;
+    visit.crop = req.body.crop;
+    visit.suggestion = req.body.suggestion;
+    // visit.area = req.body.area;
+    // visit.description = req.body.description;
+    // visit.km_done = req.body.km_done;
     visit.location = req.body.location;
 
 

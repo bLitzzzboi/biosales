@@ -13,16 +13,40 @@ const visitSchema = new Schema({
     type: String,
     required: true
   },
-  area: {
+  // area: {
+  //   type: String,
+  //   required: true
+  // },
+  // description: {
+  //   type: String,
+  //   required: true
+  // },
+  // km_done: {
+  //   type: Number,
+  //   required: true
+  // },
+  farmer_name: {
     type: String,
     required: true
   },
-  description: {
+  farmer_address: {
     type: String,
     required: true
   },
-  km_done: {
-    type: Number,
+  farmer_contact: {
+    type: String,
+    required: true
+  },
+  total_area : {
+    type: String,
+    required: true
+  },
+  crop : {
+    type: String,
+    required: true
+  },
+  suggestion: {
+    type: String,
     required: true
   },
   location: {
