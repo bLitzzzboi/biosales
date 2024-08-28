@@ -18,12 +18,12 @@ const Workouts = () => {
   const [formData, setFormData] = useState({
     area: "",
     full_name: "",
-    cnic: "",
+    // cnic: "",
     designation: "",
     contact_no: "",
-    vehicle_number: "",
-    vehicle_make: "",
-    vehicle_model: "",
+    // vehicle_number: "",
+    // vehicle_make: "",
+    // vehicle_model: "",
     sales: "",
     cash_returned: "",
     // login_code: "",
@@ -39,12 +39,12 @@ const Workouts = () => {
     setFormData({
       area: workout.area,
       full_name: workout.full_name,
-      cnic: workout.cnic,
+      // cnic: workout.cnic,
       designation: workout.designation,
       contact_no: workout.contact_no,
-      vehicle_number: workout.vehicle_number,
-      vehicle_make: workout.vehicle_make,
-      vehicle_model: workout.vehicle_model,
+      // vehicle_number: workout.vehicle_number,
+      // vehicle_make: workout.vehicle_make,
+      // vehicle_model: workout.vehicle_model,
       sales: workout.sales,
       cash_returned: workout.cash_returned,
       // login_code: workout.login_code,
@@ -93,12 +93,12 @@ const Workouts = () => {
         setFormData({
           area: "",
           full_name: "",
-          cnic: "",
+          // cnic: "",
           designation: "",
           contact_no: "",
-          vehicle_number: "",
-          vehicle_make: "",
-          vehicle_model: "",
+          // vehicle_number: "",
+          // vehicle_make: "",
+          // vehicle_model: "",
           sales: "",
           cash_returned: "",
           // login_code: "",
@@ -231,7 +231,7 @@ const Workouts = () => {
                 className={emptyFields.includes("full_name") ? "error" : ""}
               />
             </div>
-            <div style={{ marginBottom: "10px" }}>
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>CNIC:</label>
               <input
                 type="number"
@@ -240,7 +240,7 @@ const Workouts = () => {
                 value={formData.cnic}
                 className={emptyFields.includes("cnic") ? "error" : ""}
               />
-            </div>
+            </div> */}
             <div style={{ marginBottom: "10px" }}>
               <label>Designation:</label>
               <input
@@ -261,7 +261,7 @@ const Workouts = () => {
                 className={emptyFields.includes("contact_no") ? "error" : ""}
               />
             </div>
-            <div style={{ marginBottom: "10px" }}>
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Vehicle Number:</label>
               <input
                 type="text"
@@ -272,8 +272,8 @@ const Workouts = () => {
                   emptyFields.includes("vehicle_number") ? "error" : ""
                 }
               />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
+            </div> */}
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Vehicle Make:</label>
               <input
                 type="text"
@@ -282,8 +282,8 @@ const Workouts = () => {
                 value={formData.vehicle_make}
                 className={emptyFields.includes("vehicle_make") ? "error" : ""}
               />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
+            </div> */}
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Vehicle Model:</label>
               <input
                 type="text"
@@ -292,7 +292,7 @@ const Workouts = () => {
                 value={formData.vehicle_model}
                 className={emptyFields.includes("vehicle_model") ? "error" : ""}
               />
-            </div>
+            </div> */}
             <div style={{ marginBottom: "10px" }}>
               <label>Sales:</label>
               <input

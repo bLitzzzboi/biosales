@@ -38,9 +38,13 @@ const getWorkout = async (req, res) => {
 
 // create new workout
 const createWorkout = async (req, res) => {
-  const {area, full_name, cnic, designation, 
-    contact_no, vehicle_number, vehicle_make, 
-    vehicle_model, sales, cash_returned} = req.body
+  const {area, full_name, 
+    // cnic, 
+    designation, 
+    contact_no, 
+    // vehicle_number, vehicle_make, 
+    // vehicle_model, 
+    sales, cash_returned} = req.body
 
   let emptyFields = []
 
@@ -50,24 +54,24 @@ const createWorkout = async (req, res) => {
   if(!full_name) {
     emptyFields.push('full_name')
   }
-  if(!cnic) {
-    emptyFields.push('cnic')
-  }
+  // if(!cnic) {
+  //   emptyFields.push('cnic')
+  // }
   if(!designation) {
     emptyFields.push('designation')
   }
   if(!contact_no) {
     emptyFields.push('contact_no')
   }
-  if(!vehicle_number) {
-    emptyFields.push('vehicle_number')
-  }
-  if(!vehicle_make) {
-    emptyFields.push('vehicle_make')
-  }
-  if(!vehicle_model) {
-    emptyFields.push('vehicle_model')
-  }
+  // if(!vehicle_number) {
+  //   emptyFields.push('vehicle_number')
+  // }
+  // if(!vehicle_make) {
+  //   emptyFields.push('vehicle_make')
+  // }
+  // if(!vehicle_model) {
+  //   emptyFields.push('vehicle_model')
+  // }
   if(!sales) {
     emptyFields.push('sales')
   }
@@ -81,9 +85,13 @@ const createWorkout = async (req, res) => {
   // add doc to db
   try {
     const user_id = req.user._id
-    const workout = await Workout.create({area, full_name, cnic, designation, 
-      contact_no, vehicle_number, vehicle_make, 
-      vehicle_model, sales, cash_returned, user_id})
+    const workout = await Workout.create({area, full_name, 
+      // cnic, 
+      designation, 
+      contact_no, 
+      // vehicle_number, vehicle_make, 
+      // vehicle_model, 
+      sales, cash_returned, user_id})
     res.status(200).json(workout)
   } catch (error) {
     res.status(400).json({error: error.message})
@@ -124,9 +132,13 @@ const updateWorkout = async (req, res) => {
     }
 
     const fieldsToUpdate = [
-      'area', 'full_name', 'cnic', 'designation', 
-    'contact_no', 'vehicle_number', 'vehicle_make', 
-    'vehicle_model', 'sales', 'cash_returned',
+      'area', 'full_name', 
+      // 'cnic', 
+      'designation', 
+    'contact_no', 
+    // 'vehicle_number', 'vehicle_make', 
+    // 'vehicle_model', 
+    'sales', 'cash_returned',
     ];
 
     fieldsToUpdate.forEach(field => {

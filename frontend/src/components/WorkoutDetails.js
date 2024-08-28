@@ -119,7 +119,7 @@ const WorkoutDetails = ({ workout }) => {
               />
             </div>
 
-            <div style={{ marginBottom: "10px" }}>
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>CNIC:</label>
               <input
                 type="number"
@@ -127,7 +127,7 @@ const WorkoutDetails = ({ workout }) => {
                 onChange={handleChange}
                 value={formData.cnic}
               />
-            </div>
+            </div> */}
 
             <div style={{ marginBottom: "10px" }}>
               <label>Designation:</label>
@@ -149,7 +149,7 @@ const WorkoutDetails = ({ workout }) => {
               />
             </div>
 
-            <div style={{ marginBottom: "10px" }}>
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Vehicle Number:</label>
               <input
                 type="text"
@@ -157,9 +157,9 @@ const WorkoutDetails = ({ workout }) => {
                 onChange={handleChange}
                 value={formData.vehicle_number}
               />
-            </div>
+            </div> */}
 
-            <div style={{ marginBottom: "10px" }}>
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Vehicle Make:</label>  
               <input
                 type="text" 
@@ -167,9 +167,9 @@ const WorkoutDetails = ({ workout }) => {
                 onChange={handleChange}
                 value={formData.vehicle_make}
               />
-            </div>
+            </div> */}
 
-            <div style={{ marginBottom: "10px" }}>
+            {/* <div style={{ marginBottom: "10px" }}>
               <label>Vehicle Model:</label> 
               <input
                 type="text"
@@ -177,7 +177,7 @@ const WorkoutDetails = ({ workout }) => {
                 onChange={handleChange}
                 value={formData.vehicle_model}
               />
-            </div>
+            </div> */}
 
             <div style={{ marginBottom: "10px" }}>
               <label>Sales:</label>

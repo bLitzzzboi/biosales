@@ -15,10 +15,10 @@ const workoutSchema = new Schema({
     type: String,
     required: true
   },
-  cnic: {
-    type: String,
-    required: true
-  },
+  // cnic: {
+  //   type: String,
+  //   required: true
+  // },
   designation: {
     type: String,
     required: true
@@ -27,18 +27,18 @@ const workoutSchema = new Schema({
     type: String,
     required: true
   },
-  vehicle_number: {
-    type: String,
-    required: true
-  },
-  vehicle_make: {
-    type: String,
-    required: true
-  },
-  vehicle_model: {
-    type: String,
-    required: true
-  },
+  // vehicle_number: {
+  //   type: String,
+  //   required: true
+  // },
+  // vehicle_make: {
+  //   type: String,
+  //   required: true
+  // },
+  // vehicle_model: {
+  //   type: String,
+  //   required: true
+  // },
   sales: {
     type: Number,
     required: true
