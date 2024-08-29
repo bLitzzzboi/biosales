@@ -113,30 +113,32 @@ const Workouts = () => {
     }
   };
 
+  const fetchWorkouts = async () => {
+    try {
+      const response = await fetch("/api/workouts/admin", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      if (response.ok) {
+        const json = await response.json();
+        dispatch({ type: "SET_WORKOUTS", payload: json });
+      } else {
+        console.error("Failed to fetch workouts:", response.status);
+      }
+    } catch (error) {
+      console.error("Error fetching workouts:", error.message);
+    }
+  };
+
 
 
 
   useEffect(() => {
-    const fetchWorkouts = async () => {
-      try {
-        const response = await fetch("/api/workouts/admin", {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
-        if (response.ok) {
-          const json = await response.json();
-          dispatch({ type: "SET_WORKOUTS", payload: json });
-        } else {
-          console.error("Failed to fetch workouts:", response.status);
-        }
-      } catch (error) {
-        console.error("Error fetching workouts:", error.message);
-      }
-    };
 
-    if (user) {
+
+    // if (user) {
       fetchWorkouts();
-    }
-  }, [dispatch, user]);
+    // }
+  }, [fetchWorkouts]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
