@@ -5,6 +5,7 @@ import ReceiptDetails from "../components/ReceiptDetails";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
 import { useInView } from 'react-intersection-observer'; // Import the useInView hook
+import { format } from "date-fns"; // Add date-fns for date formatting
 
 const Receipts = () => {
   const { receipts, dispatch } = useReceiptsContext();
@@ -19,6 +20,9 @@ const Receipts = () => {
   const [fetched_users, setFetchedUsers] = useState([]);
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date()); // New state for selected date
+  const [filterType, setFilterType] = useState("today"); // New state for filter type
+
   const [formData, setFormData] = useState({
     sales_officer: "",
     status: "",
@@ -29,7 +33,7 @@ const Receipts = () => {
   });
   const navigate = useNavigate();
   const [selectedReceipt, setSelectedReceipt] = useState(null);
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState("today");
 
   const fetchReceipts = useCallback(async () => {
     if (user) {
@@ -120,14 +124,30 @@ const Receipts = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFilterClick = (filterValue) => {
-    setFilter(filterValue);
-  };
+  // const handleFilterClick = (filterValue) => {
+  //   setFilter(filterValue);
+  // };
 
-  const filteredReceipts =
-    (receipts || []).filter((receipt) =>
-      filter === "All" ? true : receipt.status === filter
-    );
+  // const filteredReceipts =
+  //   (receipts || []).filter((receipt) =>
+  //     filter === "All" ? true : receipt.status === filter
+  //   );
+
+  const filteredReceipts = (receipts || []).filter((receipt) =>
+  {
+    const receiptDate = new Date(receipt.createdAt);
+    // console.log("Receipt Date:", receiptDate); // Check receipt date
+    if (filterType === "today") {
+      return receiptDate.toDateString() === new Date().toDateString();
+    }
+    if (filterType === "date"){
+      return (
+        receiptDate.toDateString() === new Date(selectedDate).toDateString()
+      );
+    }
+    return true;
+  });
+
 
   return (
     <div className="workouts" style={{ width: "100vh", marginLeft: "50vh" }}>
@@ -169,47 +189,51 @@ const Receipts = () => {
         }}
       >
         <button
-          onClick={() => handleFilterClick("All")}
+          onClick={() => setFilterType("today")}
           style={{
             padding: "10px 20px",
             borderRadius: "25px",
             width: "100px",
-            border: filter === "All" ? "1px solid #012F4F" : "none",
-            backgroundColor: filter === "All" ? "#C0E9BB" : "#ccc",
-            color: filter === "All" ? "#012F4F" : "#black",
+            border: filterType === "today" ? "1px solid #012F4F" : "none",
+            backgroundColor: filterType === "today" ? "#C0E9BB" : "#ccc",
+            color: filterType === "today" ? "#012F4F" : "#black",
             cursor: "pointer",
           }}
         >
-          All
+          Today
         </button>
         <button
-          onClick={() => handleFilterClick("Verified")}
+          onClick={() => setFilterType("date")}
           style={{
             padding: "10px 20px",
             borderRadius: "25px",
             width: "100px",
-            border: filter === "Verified" ? "1px solid #012F4F" : "none",
-            backgroundColor: filter === "Verified" ? "#C0E9BB" : "#ccc",
-            color: filter === "Verified" ? "#012F4F" : "black",
+            border: filterType === "date" ? "1px solid #012F4F" : "none",
+            backgroundColor: filterType === "date" ? "#C0E9BB" : "#ccc",
+            color: filterType === "date" ? "#012F4F" : "black",
             cursor: "pointer",
           }}
         >
-          Verified
+          Date
         </button>
-        <button
-          onClick={() => handleFilterClick("Unverified")}
-          style={{
-            padding: "10px 20px",
-            borderRadius: "25px",
-            width: "100px",
-            border: filter === "Unverified" ? "1px solid #012F4F" : "none",
-            backgroundColor: filter === "Unverified" ? "#C0E9BB" : "#ccc",
-            color: filter === "Unverified" ? "#012F4F" : "black",
-            cursor: "pointer",
-          }}
-        >
-          Unverified
-        </button>
+      </div>
+      <div>
+        {filterType === "date" && (
+          <input
+            type="date"
+            onChange={(e) => setSelectedDate(e.target.value)}
+            value={format(new Date(selectedDate), "yyyy-MM-dd")}
+            style={{
+              // marginLeft: "10px",
+              padding: "10px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              width: "200px",
+              borderRadius: "25px",
+              border: "1px solid grey",
+            }}
+          />
+        )}
       </div>
       {filteredReceipts.map((receipt) => (
         <LazyReceiptDetails key={receipt._id} receipt={receipt} />
